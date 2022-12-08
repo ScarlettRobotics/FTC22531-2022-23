@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-@TeleOp
 public class TriMotorDrive {
     //private fields
     private DcMotor leftMotor = null;
@@ -22,12 +21,11 @@ public class TriMotorDrive {
 
         leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        centerMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        centerMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-
-
-    //TODO: figure this out later
-    //      centerMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
 
