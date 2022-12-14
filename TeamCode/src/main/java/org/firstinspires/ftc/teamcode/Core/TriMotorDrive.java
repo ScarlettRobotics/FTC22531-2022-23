@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class TriMotorDrive {
     //private fields
@@ -34,6 +35,7 @@ public class TriMotorDrive {
      *
      * @param leftPower - power sent to the left motor
      * @param rightPower - power to the right motor
+     * @param centerPower - power to the center motor
      */
     public void setPowers(double leftPower, double rightPower, double centerPower){
         double largest = 1.0;
@@ -59,5 +61,9 @@ public class TriMotorDrive {
 
     }
 
-
+    public void telemetry(Telemetry telemetry, double leftPower, double rightPower, double centerPower) {
+        telemetry.addData("Left", leftPower);
+        telemetry.addData("Right", rightPower);
+        telemetry.addData("Center", centerPower);
+    }
 }

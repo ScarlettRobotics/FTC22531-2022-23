@@ -6,26 +6,53 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class ClawCore {
-    private Servo leftClaw = null;
-
+    // Initialize claw variables
     private Servo rightClaw = null;
-    public void init (HardwareMap hardwareMap){
-        leftClaw = hardwareMap.get(Servo.class, "claw_left");
+    private Servo leftClaw = null;
+    // Stores state of the claw
+    private boolean clawIsOpen = false;
+
+    // Map claw variables to driver hub
+    public ClawCore (HardwareMap hardwareMap) {
         rightClaw = hardwareMap.get(Servo.class, "claw_right");
+        leftClaw = hardwareMap.get(Servo.class, "claw_left");
     }
 
-    public void telemetry(Telemetry tem){
-        tem.addData("Claw Left POS:", leftClaw.getPosition());
-        tem.addData("Claw Right POS:", rightClaw.getPosition());
+
+    /** clawToggle
+     *  Sets the claw to be in either open or closed position.
+     *  The state of the claw is stored as a private field within the object instance. This ensures
+     *  that the claw will still open and close even if it has been bumped or stressed to a different point.
+     */
+    public void clawToggle() {
+        if (clawIsOpen) {
+            clawClose();
+        } else {
+            clawOpen();
+        }
     }
 
-    public void clawOpen(){
-        leftClaw.setPosition(0.3);
-        rightClaw.setPosition(0.6);
+
+    /** clawOpen
+     *  Opens the claw to a pre-set width, then updates clawIsOpen.
+     */
+    public void clawOpen() {
+        rightClaw.setPosition(0.55);
+        leftClaw.setPosition(0.70);
+        clawIsOpen = true;
     }
 
-    public void clawClose(){
-        leftClaw.setPosition(0.6);
-        rightClaw.setPosition(0.2);
+    /** clawClose
+     *  Closes the claw to a pre-set width, then updates clawIsOpen.
+     */
+    public void clawClose() {
+        rightClaw.setPosition(0.67);
+        leftClaw.setPosition(0.60);
+        clawIsOpen = false;
+    }
+
+    public void telemetry(Telemetry telemetry) {
+        telemetry.addData("Claw Right POS", rightClaw.getPosition());
+        telemetry.addData("Claw Left POS", leftClaw.getPosition());
     }
 }
