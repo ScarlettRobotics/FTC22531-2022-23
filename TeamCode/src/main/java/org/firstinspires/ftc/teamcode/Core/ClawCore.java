@@ -37,8 +37,8 @@ public class ClawCore {
      *  Opens the claw to a pre-set width, then updates clawIsOpen.
      */
     public void clawOpen() {
-        rightClaw.setPosition(0.55);
-        leftClaw.setPosition(0.70);
+        rightClaw.setPosition(0.815);
+        leftClaw.setPosition(0.660);
         clawIsOpen = true;
     }
 
@@ -46,8 +46,8 @@ public class ClawCore {
      *  Closes the claw to a pre-set width, then updates clawIsOpen.
      */
     public void clawClose() {
-        rightClaw.setPosition(0.67);
-        leftClaw.setPosition(0.60);
+        rightClaw.setPosition(0.665);
+        leftClaw.setPosition(0.80);
         clawIsOpen = false;
     }
 
