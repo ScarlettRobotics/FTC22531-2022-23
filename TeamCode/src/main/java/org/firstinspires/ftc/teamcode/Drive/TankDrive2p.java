@@ -28,7 +28,7 @@ public class TankDrive2p extends UpperSystemManager {
         drive.setPowers(left, right, center);
         drive.telemetry(telemetry, left, right, center);
 
-        updateClaw(1);
+        updateClaw(2);
         updateSlide(2);
     }
 }
