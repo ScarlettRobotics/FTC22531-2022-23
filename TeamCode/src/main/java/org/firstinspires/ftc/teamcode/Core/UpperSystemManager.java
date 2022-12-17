@@ -26,6 +26,7 @@ public abstract class UpperSystemManager extends OpMode {
 
     /* Moves the slide based on gamepad presses */
     protected void updateSlide(final int controllerNum) {
+        // controllerNum determines the gamepad that controls the robot
         switch (controllerNum) {
             case 1:
                 // Set to specific set heights
@@ -62,6 +63,7 @@ public abstract class UpperSystemManager extends OpMode {
 
     /* Updates claw state based on gamepad presses. */
     protected void updateClaw(final int controllerNum) {
+        // controllerNum determines the gamepad that controls the robot
         switch (controllerNum) {
             case 1:
                 // Open/close claw if A/B is pressed (respectively)
