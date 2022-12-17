@@ -10,34 +10,54 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 public class SlideCore {
     // Initialize DC motor variable
-    private DcMotor slideMotor;
+    protected final DcMotor slideMotor;
+    // Height of each junction. This array is ordered ground -> low -> medium -> high junction.
+    private final int[] junctionHeights = {-510, -2400, -4200, -5100}; //TODO ADJUST VALUES
+    // The goal position for the slide to move to
+    protected int goalPosition = junctionHeights[0];
+
     // Map DC motor variable to driver hub
     public SlideCore (HardwareMap hardwareMap) {
         slideMotor = hardwareMap.get(DcMotor.class, "slide_motor");
-        slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slideMotor.setDirection(DcMotor.Direction.REVERSE);
     }
 
 
-    /**
-     * setSlidePower
-     * <p>
-     * Sets the power to the motor. Ensures it is between -1, and 1. Although this is made somewhat redundant
-     * if one were to use hard-coded literals for the button maps (i.e if pushed then set value to 1); it
-     * makes it easy to implement if it were attached to an analog input.
-     *
-     * @param powerSlide Raw input power
-     */
-    public void setSlidePower(double powerSlide){
-        double largest = 1.0;
-
-        // Takes the largest value out of 0.5 and powerSlide
-        largest = Math.max(largest, Math.abs(powerSlide));
-        slideMotor.setPower((powerSlide / largest));
+    /* Moves the slide to the height of a junction. Input options for junctionType are ground, low, medium, and high.*/
+    public void moveToJunction(final String junctionType) {
+        switch(junctionType.toUpperCase()) {
+            case "GROUND": //move to ground in arena
+                goalPosition = junctionHeights[0];
+                return;
+            case "LOW": //move to low junction
+                goalPosition = junctionHeights[1];
+                return;
+            case "MEDIUM": //move to medium junction
+                goalPosition = junctionHeights[2];
+                return;
+            case "HIGH": //move to high junction
+                goalPosition = junctionHeights[3];
+        }
     }
 
-    public void telemetry(Telemetry telemetry, double slidePower) {
-        telemetry.addData("Slide Y", slidePower);
+    /* Changes the height of the slide up by 'conesMoved' cones.
+     * If conesMoves is negative, the slide moves down by the specified cone amount. */
+    public void adjustHeight(final int conesMoved) {
+        // Height that needs to be moved to move to the next cone in a cone stack
+        //TODO ADJUST VALUE
+        final int coneHeight = -260;
+        goalPosition += (coneHeight*conesMoved);
+    }
+
+    /* Updates the slide to move it towards a wanted position.
+     * If this code isn't run, the slide will overshoot its target. */
+    public void update() {
+        slideMotor.setTargetPosition(goalPosition - slideMotor.getCurrentPosition());
+        slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slideMotor.setPower(1);
+    }
+
+    public void telemetry(Telemetry telemetry) {
+        telemetry.addData("Slide Y", slideMotor.getCurrentPosition());
     }
 
 }
