@@ -48,6 +48,10 @@ public class SlideCore {
         goalPosition += (coneHeight*conesMoved);
     }
 
+    public void linearAdjustHeight(final int amount) {
+        goalPosition += amount;
+    }
+
     /* Updates the slide to move it towards a wanted position.
      * If this code isn't run, the slide will overshoot its target. */
     public void update() {
