@@ -35,8 +35,9 @@ public abstract class UpperSystemManager extends OpMode {
                 if (gamepad1.y) slide.moveToJunction("MEDIUM");
                 if (gamepad1.b) slide.moveToJunction("HIGH");
                 // rushed code
-                if (gamepad1.dpad_up) slide.linearAdjustHeight(-3);
-                if (gamepad1.dpad_down) slide.linearAdjustHeight(3);                // Move by a cone height
+                if (gamepad1.dpad_up) slide.linearAdjustHeight(-30);
+                if (gamepad1.dpad_down) slide.linearAdjustHeight(30);
+                // Move by a cone height
                 // If pgamepad isn't included, the code in the conditional will run every frame instead of once on a button press.
                 /*if (gamepad1.dpad_up && !pgamepad_dpad_up) slide.adjustHeight(1);
                 if (gamepad1.dpad_down && !pgamepad_dpad_down) slide.adjustHeight(-1);
@@ -51,8 +52,8 @@ public abstract class UpperSystemManager extends OpMode {
                 if (gamepad2.y) slide.moveToJunction("MEDIUM");
                 if (gamepad2.b) slide.moveToJunction("HIGH");
                 // rushed code
-                if (gamepad2.dpad_up) slide.linearAdjustHeight(-3);
-                if (gamepad2.dpad_down) slide.linearAdjustHeight(3);
+                if (gamepad2.dpad_up) slide.linearAdjustHeight(-30);
+                if (gamepad2.dpad_down) slide.linearAdjustHeight(30);
                 // Move by a cone height.
                 // If pgamepad isn't included, the code in the conditional will run every frame instead of once on a button press.
                 /*if (gamepad2.dpad_up && !pgamepad_dpad_up) slide.adjustHeight(1);
