@@ -57,7 +57,6 @@ public class TriMotorDrive {
         largest = Math.max(largest, Math.abs(centerPower));
 
         centerMotor.setPower((centerPower / largest));
-
     }
 
     public void telemetry(Telemetry telemetry, double leftPower, double rightPower, double centerPower) {

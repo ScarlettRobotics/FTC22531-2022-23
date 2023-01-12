@@ -1,11 +1,7 @@
 package org.firstinspires.ftc.teamcode.Drive;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.teamcode.Core.ClawCore;
-import org.firstinspires.ftc.teamcode.Core.SlideCore;
-import org.firstinspires.ftc.teamcode.Core.TriMotorDrive;
-import org.firstinspires.ftc.teamcode.Core.UpperSystemManager;
+import org.firstinspires.ftc.teamcode.Core.ClawSlideManager;
 
 
 /**
@@ -14,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Core.UpperSystemManager;
  * Tank drive. left stick controls left motor, right stick controls right motor. Triggers on centre motor.
  */
 @TeleOp(name = "TankDrive1P", group = "auto")
-public class TankDrive extends UpperSystemManager {
+public class TankDrive extends ClawSlideManager {
     @Override
     public void loop() {
         telemetry.addData("STATUS", "Running");

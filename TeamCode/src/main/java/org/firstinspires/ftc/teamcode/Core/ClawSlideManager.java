@@ -1,9 +1,8 @@
 package org.firstinspires.ftc.teamcode.Core;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-public abstract class UpperSystemManager extends OpMode {
+public abstract class ClawSlideManager extends OpMode {
     // Initialize claw and slide classes
     protected TriMotorDrive drive;
     protected ClawCore claw;
@@ -20,7 +19,7 @@ public abstract class UpperSystemManager extends OpMode {
         slide = new SlideCore(hardwareMap);
         // Telemetry
         telemetry.addData("STATUS: ", "Initialized"); // the FTC equivalent to println()
-        telemetry.addData("FTC Team #", "20718");
+        telemetry.addData("FTC Team #", "22531");
     }
 
 
