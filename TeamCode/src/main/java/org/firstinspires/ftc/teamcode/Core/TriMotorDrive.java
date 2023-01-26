@@ -44,6 +44,9 @@ public class TriMotorDrive {
 
         leftMotor.setPower(leftPower / largest);
         rightMotor.setPower(rightPower / largest);
+        rightMotor.setDirection(DcMotor.Direction.REVERSE);
+        leftMotor.setDirection(DcMotor.Direction.REVERSE);
+
 
         setCenterPower(centerPower);
     }
