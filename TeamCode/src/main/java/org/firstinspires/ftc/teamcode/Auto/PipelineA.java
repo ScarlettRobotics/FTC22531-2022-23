@@ -23,7 +23,7 @@ import org.opencv.objdetect.*;
  *
  * @author GRIP
  */
-public class Pipeline {
+public class PipelineA {
 
     //Outputs
     private Mat cvFlipOutput = new Mat();

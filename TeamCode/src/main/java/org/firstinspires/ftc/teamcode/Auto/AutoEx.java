@@ -6,14 +6,14 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
 
 @Autonomous
 public class AutoEx extends OpMode {
 
     public void init(){
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         WebcamName webcam = hardwareMap.get(WebcamName.class, "Webcam");// creating an openCvWebcam instance
-        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcam);// then using camera factory to create a camera instance using the webcam
+        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcam, cameraMonitorViewId);// then using camera factory to create a camera instance using the webcam
 
         // Connects to the camera device
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
@@ -21,7 +21,8 @@ public class AutoEx extends OpMode {
             public void onOpened() {
                 camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
                 camera.setViewportRenderer(OpenCvCamera.ViewportRenderer.GPU_ACCELERATED);
-                camera.setPipeline(Pipeline);
+
+                camera.setPipeline(PipelineA);
             }
 
             @Override
