@@ -8,7 +8,7 @@ public class CameraServoCore {
     private Servo cameraServo;
 
     public CameraServoCore (HardwareMap hardwareMap){
-        cameraServo = hardwareMap.get(Servo.class, "camera_servo");
+        cameraServo = hardwareMap.get(Servo.class, "webcam_servo");
     }
 
     public void setCamera(){
