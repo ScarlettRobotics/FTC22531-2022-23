@@ -15,6 +15,7 @@ import org.opencv.core.Core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.*;
 import org.opencv.objdetect.*;
+import org.openftc.easyopencv.OpenCvPipeline;
 
 /**
  * GripPipeline class.
@@ -23,7 +24,7 @@ import org.opencv.objdetect.*;
  *
  * @author GRIP
  */
-public class PipelineA {
+public class PipelineA extends OpenCvPipeline {
 
     //Outputs
     private Mat cvFlipOutput = new Mat();
@@ -40,7 +41,7 @@ public class PipelineA {
     /**
      * This is the primary method that runs the entire pipeline and updates the outputs.
      */
-    public void process(Mat source0) {
+    public Mat processFrame (Mat source0) {
         // Step CV_flip0:
         Mat cvFlipSrc = source0;
         FlipCode cvFlipFlipcode = FlipCode.BOTH_AXES;
@@ -79,6 +80,7 @@ public class PipelineA {
         Mat cvAddSrc2 = hsvThreshold3Output;
         cvAdd(cvAddSrc1, cvAddSrc2, cvAddOutput);
 
+        return source0;
     }
 
     /**

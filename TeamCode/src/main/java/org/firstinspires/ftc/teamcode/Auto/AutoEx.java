@@ -25,7 +25,7 @@ public class AutoEx extends OpMode {
                 camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
                 camera.setViewportRenderer(OpenCvCamera.ViewportRenderer.GPU_ACCELERATED);
 
-                camera.setPipeline(PipelineA);
+                camera.setPipeline(new PipelineA());
             }
 
             @Override
