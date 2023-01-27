@@ -1,20 +1,8 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.HashMap;
-
 import org.opencv.core.*;
-import org.opencv.core.Core.*;
 //import org.opencv.features2d.FeatureDetector;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.*;
-import org.opencv.objdetect.*;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 /**
@@ -24,15 +12,15 @@ import org.openftc.easyopencv.OpenCvPipeline;
  *
  * @author GRIP
  */
-public class PipelineA extends OpenCvPipeline {
+public class    PipelineA extends OpenCvPipeline {
 
     //Outputs
-    private Mat cvFlipOutput = new Mat();
-    private Mat hsvThreshold0Output = new Mat();
-    private Mat hsvThreshold1Output = new Mat();
-    private Mat hsvThreshold2Output = new Mat();
-    private Mat hsvThreshold3Output = new Mat();
-    private Mat cvAddOutput = new Mat();
+    private Mat webcamInput = new Mat();
+    private Mat hsvFilterYellow = new Mat();
+    private Mat hsvFilterBlue = new Mat();
+    private Mat hsvFilterRed0 = new Mat();
+    private Mat hsvFilterRed1 = new Mat();
+    private Mat hsvFilterRed = new Mat();
 
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -45,40 +33,40 @@ public class PipelineA extends OpenCvPipeline {
         // Step CV_flip0:
         Mat cvFlipSrc = source0;
         FlipCode cvFlipFlipcode = FlipCode.BOTH_AXES;
-        cvFlip(cvFlipSrc, cvFlipFlipcode, cvFlipOutput);
+        cvFlip(cvFlipSrc, cvFlipFlipcode, webcamInput);
 
         // Step HSV_Threshold0:
-        Mat hsvThreshold0Input = cvFlipOutput;
+        Mat hsvThreshold0Input = webcamInput;
         double[] hsvThreshold0Hue = {17.805755395683452, 80.74952050389102};
         double[] hsvThreshold0Saturation = {155.93525179856115, 255.0};
         double[] hsvThreshold0Value = {121.53776978417265, 255.0};
-        hsvThreshold(hsvThreshold0Input, hsvThreshold0Hue, hsvThreshold0Saturation, hsvThreshold0Value, hsvThreshold0Output);
+        hsvThreshold(hsvThreshold0Input, hsvThreshold0Hue, hsvThreshold0Saturation, hsvThreshold0Value, hsvFilterYellow);
 
         // Step HSV_Threshold1:
-        Mat hsvThreshold1Input = cvFlipOutput;
+        Mat hsvThreshold1Input = webcamInput;
         double[] hsvThreshold1Hue = {58.273381294964025, 121.93548387096773};
         double[] hsvThreshold1Saturation = {79.53095150997845, 255.0};
         double[] hsvThreshold1Value = {167.40107913669064, 255.0};
-        hsvThreshold(hsvThreshold1Input, hsvThreshold1Hue, hsvThreshold1Saturation, hsvThreshold1Value, hsvThreshold1Output);
+        hsvThreshold(hsvThreshold1Input, hsvThreshold1Hue, hsvThreshold1Saturation, hsvThreshold1Value, hsvFilterBlue);
 
         // Step HSV_Threshold2:
-        Mat hsvThreshold2Input = cvFlipOutput;
+        Mat hsvThreshold2Input = webcamInput;
         double[] hsvThreshold2Hue = {0.0, 6.4505119453924875};
         double[] hsvThreshold2Saturation = {144.46942446043167, 255.0};
         double[] hsvThreshold2Value = {38.98381294964029, 255.0};
-        hsvThreshold(hsvThreshold2Input, hsvThreshold2Hue, hsvThreshold2Saturation, hsvThreshold2Value, hsvThreshold2Output);
+        hsvThreshold(hsvThreshold2Input, hsvThreshold2Hue, hsvThreshold2Saturation, hsvThreshold2Value, hsvFilterRed0);
 
         // Step HSV_Threshold3:
-        Mat hsvThreshold3Input = cvFlipOutput;
+        Mat hsvThreshold3Input = webcamInput;
         double[] hsvThreshold3Hue = {159.32203389830508, 180.0};
         double[] hsvThreshold3Saturation = {108.05084745762711, 255.0};
         double[] hsvThreshold3Value = {124.85875706214689, 255.0};
-        hsvThreshold(hsvThreshold3Input, hsvThreshold3Hue, hsvThreshold3Saturation, hsvThreshold3Value, hsvThreshold3Output);
+        hsvThreshold(hsvThreshold3Input, hsvThreshold3Hue, hsvThreshold3Saturation, hsvThreshold3Value, hsvFilterRed1);
 
         // Step CV_add0:
-        Mat cvAddSrc1 = hsvThreshold2Output;
-        Mat cvAddSrc2 = hsvThreshold3Output;
-        cvAdd(cvAddSrc1, cvAddSrc2, cvAddOutput);
+        Mat cvAddSrc1 = hsvFilterRed0;
+        Mat cvAddSrc2 = hsvFilterRed1;
+        cvAdd(cvAddSrc1, cvAddSrc2, hsvFilterRed);
 
         return source0;
     }
@@ -88,7 +76,7 @@ public class PipelineA extends OpenCvPipeline {
      * @return Mat output from CV_flip.
      */
     public Mat cvFlipOutput() {
-        return cvFlipOutput;
+        return webcamInput;
     }
 
     /**
@@ -96,7 +84,7 @@ public class PipelineA extends OpenCvPipeline {
      * @return Mat output from HSV_Threshold.
      */
     public Mat hsvThreshold0Output() {
-        return hsvThreshold0Output;
+        return hsvFilterYellow;
     }
 
     /**
@@ -104,7 +92,7 @@ public class PipelineA extends OpenCvPipeline {
      * @return Mat output from HSV_Threshold.
      */
     public Mat hsvThreshold1Output() {
-        return hsvThreshold1Output;
+        return hsvFilterBlue;
     }
 
     /**
@@ -112,7 +100,7 @@ public class PipelineA extends OpenCvPipeline {
      * @return Mat output from HSV_Threshold.
      */
     public Mat hsvThreshold2Output() {
-        return hsvThreshold2Output;
+        return hsvFilterRed0;
     }
 
     /**
@@ -120,7 +108,7 @@ public class PipelineA extends OpenCvPipeline {
      * @return Mat output from HSV_Threshold.
      */
     public Mat hsvThreshold3Output() {
-        return hsvThreshold3Output;
+        return hsvFilterRed1;
     }
 
     /**
@@ -128,7 +116,7 @@ public class PipelineA extends OpenCvPipeline {
      * @return Mat output from CV_add.
      */
     public Mat cvAddOutput() {
-        return cvAddOutput;
+        return hsvFilterRed;
     }
 
 
