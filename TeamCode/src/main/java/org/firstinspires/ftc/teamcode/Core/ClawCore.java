@@ -37,7 +37,7 @@ public class ClawCore {
      */
     public void open() {
         rightClaw.setPosition(0.815);
-        leftClaw.setPosition(0.660);
+        leftClaw.setPosition(0.710);
         clawIsOpen = true;
     }
 

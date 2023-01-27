@@ -26,8 +26,8 @@ public class TriMotorDrive {
 
         // Set motor movement directions
         leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        centerMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        centerMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
 
@@ -44,9 +44,9 @@ public class TriMotorDrive {
         rightMotor.setPower(rightPower);
         centerMotor.setPower(centerPower);
         // Set motor movement directions
-        rightMotor.setDirection(DcMotor.Direction.FORWARD);
         leftMotor.setDirection(DcMotor.Direction.FORWARD);
-        centerMotor.setDirection(DcMotor.Direction.FORWARD);
+        rightMotor.setDirection(DcMotor.Direction.REVERSE);
+        centerMotor.setDirection(DcMotor.Direction.REVERSE);
     }
 
 
