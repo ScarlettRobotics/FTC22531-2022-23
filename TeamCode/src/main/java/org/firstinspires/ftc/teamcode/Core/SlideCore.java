@@ -11,13 +11,12 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class SlideCore {
     // Initialize DC motor variable
     protected final DcMotor slideMotor;
-    // Position that the slide wants to be at
-    private int goalPosition;
+    // Position that the slide wants to be at (value is at lowest position)
+    private int goalPosition = -510;
 
     // Map DC motor variable to driver hub
     public SlideCore (HardwareMap hardwareMap) {
         slideMotor = hardwareMap.get(DcMotor.class, "slide_motor");
-        goalPosition = slideMotor.getCurrentPosition();
     }
 
     public void slideUp(){
@@ -35,5 +34,17 @@ public class SlideCore {
     public void telemetry(Telemetry telemetry) {
         telemetry.addData("Slide Y", slideMotor.getCurrentPosition());
     }
+
+    // Currently, this code doesn't
+    /* Moves the slide by the given amount * /
+    public void linearAdjustHeight(int amount) {
+        goalPosition += amount;
+    /* Updates the slide to move it towards a wanted position.
+     * If this code isn't run, the slide will overshoot its target. * /
+    public void update() {
+        slideMotor.setTargetPosition(goalPosition - slideMotor.getCurrentPosition());
+        slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slideMotor.setPower(1);
+    } //*/
 
 }
