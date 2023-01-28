@@ -20,17 +20,16 @@ public class SlideCore {
         goalPosition = slideMotor.getCurrentPosition();
     }
 
-    /* Moves the slide by the given amount */
-    public void linearAdjustHeight(int amount) {
-        goalPosition += amount;
+    public void slideUp(){
+        slideMotor.setPower(1);
     }
 
-    /* Updates the slide to move it towards a wanted position.
-     * If this code isn't run, the slide will overshoot its target. */
-    public void update() {
-        slideMotor.setTargetPosition(goalPosition - slideMotor.getCurrentPosition());
-        slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slideMotor.setPower(1);
+    public void slideDown(){
+        slideMotor.setPower(-1);
+    }
+
+    public void slideStop(){
+        slideMotor.setPower(0);
     }
 
     public void telemetry(Telemetry telemetry) {
