@@ -21,7 +21,7 @@ public class SlideCore {
     }
 
     /* Moves the slide by the given amount */
-    public void linearAdjustHeight(final int amount) {
+    public void linearAdjustHeight(int amount) {
         goalPosition += amount;
     }
 
