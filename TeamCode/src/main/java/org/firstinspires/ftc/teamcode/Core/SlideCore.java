@@ -31,6 +31,10 @@ public class SlideCore {
         slideMotor.setPower(0);
     }
 
+    public void slideManual(double power){
+        slideMotor.setPower(power);
+    }
+
     public void telemetry(Telemetry telemetry) {
         telemetry.addData("Slide Y", slideMotor.getCurrentPosition());
     }
