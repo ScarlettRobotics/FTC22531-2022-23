@@ -17,7 +17,7 @@ public class WebcamCore {
 
     // FOR INFO ON WHAT THESE LINES OF CODE ARE DOING, SEE:
     // https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/user_docs/camera_initialization_overview.md
-    public WebcamCore (HardwareMap hardwareMap){
+    public void initWebcam (HardwareMap hardwareMap){
         webcamView = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id",
                 hardwareMap.appContext.getPackageName());
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "NAME_OF_CAMERA_IN_CONFIG_FILE");
