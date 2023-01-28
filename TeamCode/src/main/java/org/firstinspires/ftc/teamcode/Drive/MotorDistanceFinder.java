@@ -9,9 +9,9 @@ public class MotorDistanceFinder extends ClawSlideManager {
     private int goalPosition = 0;
     @Override
     public void loop() {
-        drive.rightMotor.setTargetPosition(goalPosition);
-        drive.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        drive.rightMotor.setPower(1);
+        drive.leftMotor.setTargetPosition(goalPosition);
+        drive.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        drive.leftMotor.setPower(1);
         if (gamepad1.a) goalPosition = 260;
     }
 }

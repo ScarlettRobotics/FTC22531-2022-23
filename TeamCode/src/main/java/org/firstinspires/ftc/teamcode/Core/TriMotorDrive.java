@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class TriMotorDrive {
     //private fields
-    private DcMotor leftMotor = null;
+    public DcMotor leftMotor = null;
     public DcMotor rightMotor = null;
     private DcMotor centerMotor = null;
 
