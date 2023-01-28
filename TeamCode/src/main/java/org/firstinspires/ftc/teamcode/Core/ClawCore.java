@@ -1,14 +1,13 @@
 package org.firstinspires.ftc.teamcode.Core;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class ClawCore {
     // Initialize claw variables
-    private Servo rightClaw = null;
-    private Servo leftClaw = null;
+    private Servo rightClaw;
+    private Servo leftClaw;
     // Stores state of the claw
     private boolean clawIsOpen = false;
 
@@ -24,11 +23,11 @@ public class ClawCore {
      *  The state of the claw is stored as a private field within the object instance. This ensures
      *  that the claw will still open and close even if it has been bumped or stressed to a different point.
      */
-    public void clawToggle() {
+    public void toggle() {
         if (clawIsOpen) {
-            clawClose();
+            close();
         } else {
-            clawOpen();
+            open();
         }
     }
 
@@ -36,16 +35,16 @@ public class ClawCore {
     /** clawOpen
      *  Opens the claw to a pre-set width, then updates clawIsOpen.
      */
-    public void clawOpen() {
+    public void open() {
         rightClaw.setPosition(0.815);
-        leftClaw.setPosition(0.660);
+        leftClaw.setPosition(0.710);
         clawIsOpen = true;
     }
 
     /** clawClose
      *  Closes the claw to a pre-set width, then updates clawIsOpen.
      */
-    public void clawClose() {
+    public void close() {
         rightClaw.setPosition(0.665);
         leftClaw.setPosition(0.80);
         clawIsOpen = false;

@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Core.ClawSlideManager;
  * Designed for driving to be on controller 1, upper systems on controller 1.
  * Tank drive. left stick controls left motor, right stick controls right motor. Triggers on centre motor.
  */
-@TeleOp(name = "TankDrive1P", group = "auto")
+@TeleOp(name = "BROKEN! TankDrive1P", group = "auto")
 public class TankDrive extends ClawSlideManager {
     @Override
     public void loop() {
@@ -21,8 +21,11 @@ public class TankDrive extends ClawSlideManager {
         double left = gamepad1.left_stick_y;
         double right = gamepad1.right_stick_y;
         double center = gamepad1.right_trigger + (-gamepad1.left_trigger);
+        cameraServo.setCamera();
         drive.setPowers(left, right, center);
         drive.telemetry(telemetry, left, right, center);
+        cameraServo.telemetry(telemetry);
+
 
         updateClaw(1);
         updateSlide(1);

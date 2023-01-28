@@ -15,17 +15,19 @@ public class TriMotorDrive {
 
 
     public TriMotorDrive (HardwareMap hardwareMap) {
-
         leftMotor = hardwareMap.get(DcMotor.class, "left_motor");
         rightMotor = hardwareMap.get(DcMotor.class, "right_motor");
         centerMotor = hardwareMap.get(DcMotor.class, "center_motor");
 
+        // Set motor run modes
         leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         centerMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // Set motor movement directions
+        leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         centerMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
     }
 
 
@@ -36,28 +38,17 @@ public class TriMotorDrive {
      * @param rightPower - power to the right motor
      * @param centerPower - power to the center motor
      */
-    public void setPowers(double leftPower, double rightPower, double centerPower){
-        double largest = 1.0;
-
-        largest = Math.max(largest, Math.abs(leftPower));
-        largest = Math.max(largest, Math.abs(rightPower));
-
-        leftMotor.setPower(leftPower / largest);
-        rightMotor.setPower(rightPower / largest);
-
-        setCenterPower(centerPower);
+    public void setPowers(double leftPower, double rightPower, double centerPower) {
+        // Set motor powers
+        leftMotor.setPower(leftPower);
+        rightMotor.setPower(rightPower);
+        centerMotor.setPower(centerPower);
+        // Set motor movement directions
+        leftMotor.setDirection(DcMotor.Direction.FORWARD);
+        rightMotor.setDirection(DcMotor.Direction.REVERSE);
+        centerMotor.setDirection(DcMotor.Direction.REVERSE);
     }
 
-    /** setCenterPower
-     *  helper function. Cleans up the setPowersFunction
-     * @param centerPower - Power sent to the center motor. Ensures the maximum range is -1 to 1.
-     */
-    private void setCenterPower(double centerPower){
-        double largest = 1.0;
-        largest = Math.max(largest, Math.abs(centerPower));
-
-        centerMotor.setPower((centerPower / largest));
-    }
 
     public void telemetry(Telemetry telemetry, double leftPower, double rightPower, double centerPower) {
         telemetry.addData("Left", leftPower);
