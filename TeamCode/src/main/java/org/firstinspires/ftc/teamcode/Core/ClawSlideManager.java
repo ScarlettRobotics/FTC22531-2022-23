@@ -8,7 +8,7 @@ public abstract class ClawSlideManager extends OpMode {
     protected ClawCore claw;
     protected SlideCore slide;
 
-    protected CameraServoCore cameraServo;
+    //protected CameraServoCore cameraServo;
     // Stores previous states of listed buttons
     private boolean pgamepad_dpad_up = false;
     private boolean pgamepad_dpad_down = false;
@@ -19,7 +19,7 @@ public abstract class ClawSlideManager extends OpMode {
         drive = new TriMotorDrive(hardwareMap);
         claw = new ClawCore(hardwareMap);
         slide = new SlideCore(hardwareMap);
-        cameraServo = new CameraServoCore(hardwareMap);
+        //cameraServo = new CameraServoCore(hardwareMap);
         // Telemetry
         telemetry.addData("STATUS: ", "Initialized"); // the FTC equivalent to println()
         telemetry.addData("FTC Team #", "22531");
