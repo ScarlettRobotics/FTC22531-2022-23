@@ -27,35 +27,37 @@ public class Pipeline extends OpenCvPipeline {
     /** Flips the camera on its x and y axis.
      * MAKE SURE TO RUN THIS BEFORE RUNNING THE OTHER HSV FILTERS */
     public Mat processFrame(Mat source0) {
+        // Flip webcam on x and y axes
         Mat cvFlipSrc = source0;
         FlipCode cvFlipFlipcode = FlipCode.BOTH_AXES;
         cvFlip(cvFlipSrc, cvFlipFlipcode, webcamOutput);
 
+        // Filter webcam to only view green (turned into black/white mesh)
         Mat hsvThreshold0Input = webcamOutput;
         double[] hsvThreshold0Hue = {42.086330935251794, 80.17064846416382};
         double[] hsvThreshold0Saturation = {107.77877697841724, 255.0};
         double[] hsvThreshold0Value = {94.01978417266186, 255.0};
         hsvThreshold(hsvThreshold0Input, hsvThreshold0Hue, hsvThreshold0Saturation, hsvThreshold0Value, hsvFilterGreen);
 
+        // Filter webcam to only view orange (turned into black/white mesh)
         Mat hsvThreshold1Input = webcamOutput;
         double[] hsvThreshold1Hue = {8.093525179856115, 19.034459980182742};
         double[] hsvThreshold1Saturation = {127.68742633012235, 255.0};
         double[] hsvThreshold1Value = {121.53776978417267, 255.0};
         hsvThreshold(hsvThreshold1Input, hsvThreshold1Hue, hsvThreshold1Saturation, hsvThreshold1Value, hsvFilterOrange);
 
+        // Filter webcam to only view purple (turned into black/white mesh)
         Mat hsvThreshold2Input = webcamOutput;
         double[] hsvThreshold2Hue = {121.40287769784173, 180.0};
         double[] hsvThreshold2Saturation = {144.46942446043167, 255.0};
         double[] hsvThreshold2Value = {61.915467625899275, 255.0};
         hsvThreshold(hsvThreshold2Input, hsvThreshold2Hue, hsvThreshold2Saturation, hsvThreshold2Value, hsvFilterPurple);
 
+        //obligatory; not very useful
         return webcamOutput;
     }
 
-    /**
-     * This method is a generated getter for the output of a CV_flip.
-     * @return Mat output from CV_flip.
-     */
+    /** Returns image of webcam after it was flipped on the x and y axes */
     public Mat cvFlipOutput() {
         return webcamOutput;
     }
