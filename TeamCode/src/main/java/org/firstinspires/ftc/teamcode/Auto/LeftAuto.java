@@ -12,20 +12,18 @@ package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import org.firstinspires.ftc.teamcode.Core.CameraServoCore;
-import org.firstinspires.ftc.teamcode.Core.ClawCore;
-import org.firstinspires.ftc.teamcode.Core.SlideCore;
-import org.firstinspires.ftc.teamcode.Core.TriMotorDrive;
+import org.firstinspires.ftc.teamcode.Core.*;
 
 @Autonomous(name="Left Auto", group="Robot")
 
 public class LeftAuto extends LinearOpMode {
-
     protected TriMotorDrive drive;
     protected ClawCore claw;
     protected SlideCore slide;
 
+    protected WebcamCore webcam;
     protected CameraServoCore cameraServo;
+    protected SleeveDetector sleeveDetector;
 
     @Override
     public void runOpMode() {
@@ -33,16 +31,20 @@ public class LeftAuto extends LinearOpMode {
         drive = new TriMotorDrive(hardwareMap);
         claw = new ClawCore(hardwareMap);
         slide = new SlideCore(hardwareMap);
+
+        webcam = new WebcamCore(hardwareMap);
         cameraServo = new CameraServoCore(hardwareMap);
+
+        sleeveDetector = new SleeveDetector();
+
         // Telemetry
         telemetry.addData("FTC Team #", "22531");
 
         //Stage 1: Scan and prepare for movements
-        cameraServo.setCamera();
-
-        claw.close(); // Grabs cone positioned in front
-
-        //wait and scan
+        cameraServo.resetCameraServo();
+        claw.close();
+        int sleevePos = sleeveDetector.sleevePos();
+        telemetry.addData("sleevePos", sleevePos);
 
         // strafe right to center on tile
 

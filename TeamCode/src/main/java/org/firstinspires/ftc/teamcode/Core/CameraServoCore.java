@@ -11,8 +11,12 @@ public class CameraServoCore {
         cameraServo = hardwareMap.get(Servo.class, "webcam_servo");
     }
 
-    public void setCamera(){
+    public void resetCameraServo(){
         cameraServo.setPosition(0.90);
+    }
+
+    public void setCameraServo(double pos) {
+        cameraServo.setPosition(pos);
     }
 
     public void cameraUp(){
