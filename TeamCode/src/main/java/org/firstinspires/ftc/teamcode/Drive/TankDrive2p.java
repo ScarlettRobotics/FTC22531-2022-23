@@ -22,7 +22,7 @@ public class TankDrive2p extends ClawSlideManager {
         double right = gamepad1.right_stick_y;
         double center = gamepad1.right_trigger + (-gamepad1.left_trigger);
         cameraServo.resetCameraServo();
-        drive.setPowers(left, right, center);
+        drive.setMoveVelocity(left, right, center);
         drive.telemetry(telemetry, left, right, center);
 
         updateClaw(2);

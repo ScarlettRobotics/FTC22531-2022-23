@@ -1,28 +1,27 @@
 package org.firstinspires.ftc.teamcode.Core;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class TriMotorDrive {
-    //private fields
-    public DcMotor leftMotor = null;
-    public DcMotor rightMotor = null;
-    private DcMotor centerMotor = null;
+    //// CLASS VARIABLES
+    private DcMotor leftMotor;
+    private DcMotor rightMotor;
+    private DcMotor centerMotor;
+    //// CONSTANT VARIABLES
+    private final int ENCODER_VALUES_PER_ROTATION = 1400;
+    // TODO ADJUST VALUE
+    private final int INCHES_PER_ROTATION = 10;
 
-
+    /* Init */
     public TriMotorDrive (HardwareMap hardwareMap) {
+        // Map DcMotor variables to hardwareMap
         leftMotor = hardwareMap.get(DcMotor.class, "left_motor");
         rightMotor = hardwareMap.get(DcMotor.class, "right_motor");
         centerMotor = hardwareMap.get(DcMotor.class, "center_motor");
-
-        // Set motor run modes
-        leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        centerMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Set motor movement directions
         leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -32,21 +31,23 @@ public class TriMotorDrive {
 
 
     /** setPowers
-     * Ensures that the range of power sent to the motors is
+     * Uses RUN_USING_ENCODER to move all motors by an inputted velocity
      *
-     * @param leftPower - power sent to the left motor
-     * @param rightPower - power to the right motor
-     * @param centerPower - power to the center motor
+     * @param leftVelocity - power sent to the left motor
+     * @param rightVelocity - power to the right motor
+     * @param centerVelocity - power to the center motor
      */
-    public void setPowers(double leftPower, double rightPower, double centerPower) {
+    public void setMoveVelocity(double leftVelocity, double rightVelocity, double centerVelocity) {
+        // Set motor run modes to RUN_USING_ENCODER if not previously done so
+        if (leftMotor.getMode() != DcMotor.RunMode.RUN_USING_ENCODER) {
+            leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            centerMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
         // Set motor powers
-        leftMotor.setPower(leftPower);
-        rightMotor.setPower(rightPower);
-        centerMotor.setPower(centerPower);
-        // Set motor movement directions
-        leftMotor.setDirection(DcMotor.Direction.FORWARD);
-        rightMotor.setDirection(DcMotor.Direction.REVERSE);
-        centerMotor.setDirection(DcMotor.Direction.REVERSE);
+        leftMotor.setPower(leftVelocity);
+        rightMotor.setPower(rightVelocity);
+        centerMotor.setPower(centerVelocity);
     }
 
 
