@@ -16,7 +16,7 @@ public class TriMotorDrive {
     // TODO ADJUST VALUE
     private final int INCHES_PER_ROTATION = 10;
 
-    /* Init */
+    /** Init */
     public TriMotorDrive (HardwareMap hardwareMap) {
         // Map DcMotor variables to hardwareMap
         leftMotor = hardwareMap.get(DcMotor.class, "left_motor");
@@ -50,13 +50,13 @@ public class TriMotorDrive {
         centerMotor.setPower(centerVelocity);
     }
 
-    /* Converts inches to encoder values using constants
+    /** Converts inches to encoder values using constants
     * MAY BE UNRELIABLE, AS FRICTION IS UNACCOUNTED FOR */
     private int inchesToEncoderValues(double inches) {
         return Math.toIntExact(Math.round(inches * ENCODER_VALUES_PER_ROTATION / INCHES_PER_ROTATION));
     }
 
-    /* Uses RUN_TO_POSITION to move the motors by a distance. */
+    /** Uses RUN_TO_POSITION to move the motors by a distance. */
     public void moveInches(double leftInches, double rightInches, double centerInches) {
         // Set motor run modes to RUN_TO_POSITION if not previously done so
         if (leftMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
