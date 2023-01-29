@@ -50,6 +50,25 @@ public class TriMotorDrive {
         centerMotor.setPower(centerVelocity);
     }
 
+    /* Converts inches to encoder values using constants
+    * MAY BE UNRELIABLE, AS FRICTION IS UNACCOUNTED FOR */
+    private int inchesToEncoderValues(double inches) {
+        return Math.toIntExact(Math.round(inches * ENCODER_VALUES_PER_ROTATION / INCHES_PER_ROTATION));
+    }
+
+    /* Uses RUN_TO_POSITION to move the motors by a distance. */
+    public void moveInches(double leftInches, double rightInches, double centerInches) {
+        // Set motor run modes to RUN_TO_POSITION if not previously done so
+        if (leftMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
+            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            centerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        // Change target position of motors
+        leftMotor.setTargetPosition(leftMotor.getTargetPosition() + inchesToEncoderValues(leftInches));
+        rightMotor.setTargetPosition(rightMotor.getTargetPosition() + inchesToEncoderValues(rightInches));
+        centerMotor.setTargetPosition(centerMotor.getTargetPosition() + inchesToEncoderValues(centerInches));
+    }
 
     public void telemetry(Telemetry telemetry, double leftPower, double rightPower, double centerPower) {
         telemetry.addData("Left", leftPower);
