@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.Core;
 
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+/*** Manages the drivetrain of the robot.
+ * "Tri" refers to the three wheels in the drivetrain. */
 public class TriMotorDrive {
     //// CLASS VARIABLES
     private DcMotor leftMotor;
@@ -30,21 +31,19 @@ public class TriMotorDrive {
     }
 
 
-    /** setPowers
+    /** setMoveVelocity
      * Uses RUN_USING_ENCODER to move all motors by an inputted velocity
      *
      * @param leftVelocity - power sent to the left motor
-     * @param rightVelocity - power to the right motor
-     * @param centerVelocity - power to the center motor
+     * @param rightVelocity - power sent to the right motor
+     * @param centerVelocity - power sent to the center motor
      */
     public void setMoveVelocity(double leftVelocity, double rightVelocity, double centerVelocity) {
-        // Set motor run modes to RUN_USING_ENCODER if not previously done so
         if (leftMotor.getMode() != DcMotor.RunMode.RUN_USING_ENCODER) {
             leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             centerMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
-        // Set motor powers
         leftMotor.setPower(leftVelocity);
         rightMotor.setPower(rightVelocity);
         centerMotor.setPower(centerVelocity);
