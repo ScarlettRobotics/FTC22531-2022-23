@@ -35,21 +35,4 @@ public class SlideCore {
         telemetry.addData("Slide Y", slideMotor.getCurrentPosition());
     }
 
-    /* Moves the slide by the given amount */
-    public void linearAdjustHeight(int amount) {
-        goalPosition += amount;
-    }
-
-    public void setGoalPosition(int goalPosition) {
-        this.goalPosition = goalPosition;
-    }
-
-    /* Updates the slide to move it towards a wanted position.
-     * If this code isn't run, the slide will overshoot its target. */
-    public void update() {
-        slideMotor.setTargetPosition(goalPosition);
-        slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slideMotor.setPower(1);
-    }
-
 }

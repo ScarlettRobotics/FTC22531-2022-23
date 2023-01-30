@@ -32,24 +32,20 @@ public abstract class ClawSlideManager extends OpMode {
         switch (controllerNum) {
             case 1:
                 if (gamepad1.dpad_up) {
-                    slide.linearAdjustHeight(-30);
-                }
-                if (gamepad1.dpad_down) {
-                    slide.linearAdjustHeight(30);
-                }
-                if (gamepad1.b) {
-                    slide.setGoalPosition(-510);
+                    slide.slideUp();
+                } else if (gamepad1.dpad_down) {
+                    slide.slideDown();
+                } else {
+                    slide.slideStop();
                 }
                 break;
             case 2:
                 if (gamepad2.dpad_up) {
-                    slide.linearAdjustHeight(-30);
-                }
-                if (gamepad2.dpad_down) {
-                    slide.linearAdjustHeight(30);
-                }
-                if (gamepad2.b) {
-                    slide.setGoalPosition(-510);
+                    slide.slideUp();
+                } else if (gamepad2.dpad_down) {
+                    slide.slideDown();
+                } else {
+                    slide.slideStop();
                 }
                 break;
         }
