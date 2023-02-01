@@ -15,7 +15,7 @@ public class TriMotorDrive {
     //// CONSTANT VARIABLES
     private final int ENCODER_VALUES_PER_ROTATION = 1400;
     // TODO ADJUST VALUE
-    private final int INCHES_PER_ROTATION = 10;
+    private final double INCHES_PER_ROTATION = 10;
 
     /** Init */
     public TriMotorDrive (HardwareMap hardwareMap) {
@@ -50,7 +50,7 @@ public class TriMotorDrive {
     }
 
     /** Converts inches to encoder values using constants
-    * MAY BE UNRELIABLE, AS FRICTION IS UNACCOUNTED FOR */
+     * MAY BE UNRELIABLE, AS FRICTION IS UNACCOUNTED FOR */
     private int inchesToEncoderValues(double inches) {
         return Math.toIntExact(Math.round(inches * ENCODER_VALUES_PER_ROTATION / INCHES_PER_ROTATION));
     }
@@ -67,6 +67,15 @@ public class TriMotorDrive {
         leftMotor.setTargetPosition(leftMotor.getTargetPosition() + inchesToEncoderValues(leftInches));
         rightMotor.setTargetPosition(rightMotor.getTargetPosition() + inchesToEncoderValues(rightInches));
         centerMotor.setTargetPosition(centerMotor.getTargetPosition() + inchesToEncoderValues(centerInches));
+    }
+
+    /** If the motors are in RUN_TO_POSITION, motors progress to their target position */
+    public void update() {
+        if (leftMotor.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
+            leftMotor.setPower(1);
+            rightMotor.setPower(1);
+            centerMotor.setPower(1);
+        }
     }
 
     public void telemetry(Telemetry telemetry, double leftPower, double rightPower, double centerPower) {

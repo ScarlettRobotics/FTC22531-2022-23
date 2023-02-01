@@ -48,7 +48,12 @@ public class LeftAuto extends LinearOpMode {
         int sleevePos = sleeveDetector.sleevePos();
         telemetry.addData("sleevePos", sleevePos);
 
+        drive.moveInches(10, 10, 0);
         // strafe right to center on tile
+        while(opModeIsActive()) {
+            drive.update();
+            //TODO
+        }
 
         //proceed forward
 
