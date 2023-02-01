@@ -3,15 +3,15 @@ package org.firstinspires.ftc.teamcode.Auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.Core.Pipeline;
+import org.firstinspires.ftc.teamcode.Core.CV.Pipeline;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 
 
-@Autonomous
-class CameraTest extends OpMode {
+@Autonomous(name="Camera Test", group = "Auto")
+public class CameraTest extends OpMode {
     OpenCvWebcam webcam;
 
     @Override

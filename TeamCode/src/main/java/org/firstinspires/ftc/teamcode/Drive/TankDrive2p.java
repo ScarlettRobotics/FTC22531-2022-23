@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Drive;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import org.firstinspires.ftc.teamcode.Core.CameraServoCore;
 import org.firstinspires.ftc.teamcode.Core.ClawSlideManager;
 
 
@@ -21,7 +22,7 @@ public class TankDrive2p extends ClawSlideManager {
         double left = gamepad1.left_stick_y;
         double right = gamepad1.right_stick_y;
         double center = gamepad1.right_trigger + (-gamepad1.left_trigger);
-        cameraServo.setCamera();
+        //CameraServoCore.setCameraServo(0.9);
         drive.setPowers(left, right, center);
         drive.telemetry(telemetry, left, right, center);
 

@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.Core.ClawCore;
 import org.firstinspires.ftc.teamcode.Core.SlideCore;
 import org.firstinspires.ftc.teamcode.Core.TriMotorDrive;
 
-@Autonomous(name="Left Auto", group="Robot")
+@Autonomous(name="Left Auto", group="Auto")
 
 public class LeftAuto extends LinearOpMode {
 
@@ -38,7 +38,7 @@ public class LeftAuto extends LinearOpMode {
         telemetry.addData("FTC Team #", "22531");
 
         //Stage 1: Scan and prepare for movements
-        cameraServo.setCamera();
+        //CameraServoCore.setCameraServo(0.90);
 
         claw.close(); // Grabs cone positioned in front
 
