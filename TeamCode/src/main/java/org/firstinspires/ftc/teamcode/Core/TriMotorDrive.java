@@ -69,6 +69,15 @@ public class TriMotorDrive {
         centerMotor.setTargetPosition(centerMotor.getTargetPosition() + inchesToEncoderValues(centerInches));
     }
 
+    /** If the motors are in RUN_TO_POSITION, motors progress to their target position */
+    public void update() {
+        if (leftMotor.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
+            leftMotor.setPower(1);
+            rightMotor.setPower(1);
+            centerMotor.setPower(1);
+        }
+    }
+
     public void telemetry(Telemetry telemetry, double leftPower, double rightPower, double centerPower) {
         telemetry.addData("Left", leftPower);
         telemetry.addData("Right", rightPower);
