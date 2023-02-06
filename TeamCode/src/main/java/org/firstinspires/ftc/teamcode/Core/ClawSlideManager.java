@@ -31,16 +31,11 @@ public abstract class ClawSlideManager extends OpMode {
         // controllerNum determines the gamepad that controls the robot
         switch (controllerNum) {
             case 1:
-                if (gamepad1.dpad_up) {
-                    slide.slideUp();
-                } else if (gamepad1.dpad_down) {
-                    slide.slideDown();
-                } else {
-                    slide.slideStop();
-                }
+                slide.slideManual(gamepad1.right_trigger - gamepad1.left_trigger);
                 break;
             case 2:
-                slide.slideManual((-gamepad2.left_trigger+gamepad2.right_trigger));
+                slide.slideManual(gamepad2.right_trigger - gamepad2.left_trigger);
+                break;
         }
         slide.telemetry(telemetry);
     }
