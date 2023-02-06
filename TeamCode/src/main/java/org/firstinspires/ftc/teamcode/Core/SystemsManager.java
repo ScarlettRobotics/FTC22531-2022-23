@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.Core;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-public abstract class ClawSlideManager extends OpMode {
+public abstract class SystemsManager extends OpMode {
     // Initialize claw and slide classes
     protected TriMotorDrive drive;
     protected ClawCore claw;
@@ -51,6 +51,7 @@ public abstract class ClawSlideManager extends OpMode {
                 } else if (gamepad1.right_bumper) {
                     claw.close();
                 }
+                break;
             case 2:
                 // Open/close claw if A/B is pressed (respectively)
                 if (gamepad2.left_bumper) {
@@ -58,7 +59,41 @@ public abstract class ClawSlideManager extends OpMode {
                 } else if (gamepad2.right_bumper) {
                     claw.close();
                 }
+                break;
         }
         claw.telemetry(telemetry);
+    }
+
+    protected void updateMotor(final int controllerNum) {
+        double left, right, center;
+
+        // controllerNum determines the gamepad that controls the robot
+        switch(controllerNum) {
+            case 1:
+                // Move left/right wheels based on left/right stick movement
+                left = gamepad1.left_stick_y;
+                right = gamepad1.right_stick_y;
+                center = gamepad1.right_trigger - gamepad1.left_trigger;
+                // Snap turn
+                if (gamepad1.dpad_left) drive.moveInches(5, -5, 0);
+                if (gamepad1.dpad_right) drive.moveInches(-5, 5, 0);
+                break;
+            case 2:
+                // Move left/right wheels based on left/right stick movement
+                left = gamepad2.left_stick_y;
+                right = gamepad2.right_stick_y;
+                center = gamepad2.right_trigger - gamepad2.left_trigger;
+                // Snap turn
+                if (gamepad2.dpad_left) drive.moveInches(5, -5, 0);
+                if (gamepad2.dpad_right) drive.moveInches(-5, 5, 0);
+                break;
+            default:
+                left = 0;
+                right = 0;
+                center = 0;
+        }
+        drive.setMoveVelocity(left, right, center);
+        drive.telemetry(telemetry, left, right, center);
+        drive.update();
     }
 }
