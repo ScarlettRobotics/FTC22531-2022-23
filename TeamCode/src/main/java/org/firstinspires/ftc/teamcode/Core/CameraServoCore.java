@@ -12,7 +12,7 @@ public class CameraServoCore {
     }
 
     public void resetCameraServo(){
-        cameraServo.setPosition(0.90);
+        setCameraServo(0.90);
     }
 
     public void setCameraServo(double pos) {
