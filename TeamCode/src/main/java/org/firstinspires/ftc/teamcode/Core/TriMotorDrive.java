@@ -1,28 +1,28 @@
 package org.firstinspires.ftc.teamcode.Core;
 
-
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+/*** Manages the drivetrain of the robot.
+ * "Tri" refers to the three wheels in the drivetrain. */
 public class TriMotorDrive {
-    //private fields
-    private DcMotor leftMotor = null;
-    private DcMotor rightMotor = null;
-    private DcMotor centerMotor = null;
+    //// CLASS VARIABLES
+    private DcMotor leftMotor;
+    private DcMotor rightMotor;
+    private DcMotor centerMotor;
+    //// CONSTANT VARIABLES
+    private final int ENCODER_VALUES_PER_ROTATION = 1400;
+    // TODO ADJUST VALUE
+    private final double INCHES_PER_ROTATION = 10;
 
-
+    /** Init */
     public TriMotorDrive (HardwareMap hardwareMap) {
+        // Map DcMotor variables to hardwareMap
         leftMotor = hardwareMap.get(DcMotor.class, "left_motor");
         rightMotor = hardwareMap.get(DcMotor.class, "right_motor");
         centerMotor = hardwareMap.get(DcMotor.class, "center_motor");
-
-        // Set motor run modes
-        leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        centerMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Set motor movement directions
         leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -31,24 +31,52 @@ public class TriMotorDrive {
     }
 
 
-    /** setPowers
-     * Ensures that the range of power sent to the motors is
+    /** setMoveVelocity
+     * Uses RUN_USING_ENCODER to move all motors by an inputted velocity
      *
-     * @param leftPower - power sent to the left motor
-     * @param rightPower - power to the right motor
-     * @param centerPower - power to the center motor
+     * @param leftVelocity - power sent to the left motor
+     * @param rightVelocity - power sent to the right motor
+     * @param centerVelocity - power sent to the center motor
      */
-    public void setPowers(double leftPower, double rightPower, double centerPower) {
-        // Set motor powers
-        leftMotor.setPower(leftPower);
-        rightMotor.setPower(rightPower);
-        centerMotor.setPower(centerPower);
-        // Set motor movement directions
-        leftMotor.setDirection(DcMotor.Direction.FORWARD);
-        rightMotor.setDirection(DcMotor.Direction.REVERSE);
-        centerMotor.setDirection(DcMotor.Direction.REVERSE);
+    public void setMoveVelocity(double leftVelocity, double rightVelocity, double centerVelocity) {
+        if (leftMotor.getMode() != DcMotor.RunMode.RUN_USING_ENCODER) {
+            leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            centerMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+        leftMotor.setPower(leftVelocity);
+        rightMotor.setPower(rightVelocity);
+        centerMotor.setPower(centerVelocity);
     }
 
+    /** Converts inches to encoder values using constants
+     * MAY BE UNRELIABLE, AS FRICTION IS UNACCOUNTED FOR */
+    private int inchesToEncoderValues(double inches) {
+        return Math.toIntExact(Math.round(inches * ENCODER_VALUES_PER_ROTATION / INCHES_PER_ROTATION));
+    }
+
+    /** Uses RUN_TO_POSITION to move the motors by a distance. */
+    public void moveInches(double leftInches, double rightInches, double centerInches) {
+        // Set motor run modes to RUN_TO_POSITION if not previously done so
+        if (leftMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
+            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            centerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        // Change target position of motors
+        leftMotor.setTargetPosition(leftMotor.getTargetPosition() + inchesToEncoderValues(leftInches));
+        rightMotor.setTargetPosition(rightMotor.getTargetPosition() + inchesToEncoderValues(rightInches));
+        centerMotor.setTargetPosition(centerMotor.getTargetPosition() + inchesToEncoderValues(centerInches));
+    }
+
+    /** If the motors are in RUN_TO_POSITION, motors progress to their target position */
+    public void update() {
+        if (leftMotor.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
+            leftMotor.setPower(1);
+            rightMotor.setPower(1);
+            centerMotor.setPower(1);
+        }
+    }
 
     public void telemetry(Telemetry telemetry, double leftPower, double rightPower, double centerPower) {
         telemetry.addData("Left", leftPower);
