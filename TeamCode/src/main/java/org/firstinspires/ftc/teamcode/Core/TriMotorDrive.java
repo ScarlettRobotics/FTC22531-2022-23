@@ -57,16 +57,16 @@ public class TriMotorDrive {
 
     /** Uses RUN_TO_POSITION to move the motors by a distance. */
     public void moveInches(double leftInches, double rightInches, double centerInches) {
+        // Change target position of motors
+        leftMotor.setTargetPosition(leftMotor.getTargetPosition() + inchesToEncoderValues(leftInches));
+        rightMotor.setTargetPosition(rightMotor.getTargetPosition() + inchesToEncoderValues(rightInches));
+        centerMotor.setTargetPosition(centerMotor.getTargetPosition() + inchesToEncoderValues(centerInches));
         // Set motor run modes to RUN_TO_POSITION if not previously done so
         if (leftMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             centerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-        // Change target position of motors
-        leftMotor.setTargetPosition(leftMotor.getTargetPosition() + inchesToEncoderValues(leftInches));
-        rightMotor.setTargetPosition(rightMotor.getTargetPosition() + inchesToEncoderValues(rightInches));
-        centerMotor.setTargetPosition(centerMotor.getTargetPosition() + inchesToEncoderValues(centerInches));
     }
 
     /** If the motors are in RUN_TO_POSITION, motors progress to their target position */
