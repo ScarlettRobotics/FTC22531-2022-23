@@ -40,7 +40,14 @@ public abstract class ClawSlideManager extends OpMode {
                 }
                 break;
             case 2:
-                slide.slideManual((-gamepad2.left_trigger+gamepad2.right_trigger));
+                if (gamepad2.dpad_up) {
+                    slide.slideUp();
+                } else if (gamepad2.dpad_down) {
+                    slide.slideDown();
+                } else {
+                    slide.slideStop();
+                }
+                break;
         }
         slide.telemetry(telemetry);
     }
