@@ -15,7 +15,7 @@ public class TriMotorDrive {
     //// CONSTANT VARIABLES
     private final int ENCODER_VALUES_PER_ROTATION = 1400;
     // TODO ADJUST VALUE
-    private final double INCHES_PER_ROTATION = 10;
+    private final double INCHES_PER_ROTATION = 12.36;
 
     /** Init */
     public TriMotorDrive (HardwareMap hardwareMap) {
