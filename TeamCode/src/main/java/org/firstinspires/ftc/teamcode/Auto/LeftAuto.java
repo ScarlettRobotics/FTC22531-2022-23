@@ -38,19 +38,20 @@ public class LeftAuto extends LinearOpMode {
 
         sleeveDetector = new SleeveDetector();
 
-        // Telemetry
-        telemetry.addData("FTC Team #", "22531");
 
         //Stage 1: Scan and prepare for movements
         cameraServo.resetCameraServo();
         claw.close();
         int sleevePos = sleeveDetector.sleevePos();
-        telemetry.addData("sleevePos", sleevePos);
 
         drive.moveInches(10, 10, 0);
         // strafe right to center on tile
         while(opModeIsActive()) {
             drive.update();
+            // Telemetry
+            telemetry.addData("FTC Team #", "22531");
+            telemetry.addData("sleevePos", sleevePos);
+            telemetry.update();
             //TODO
         }
 
