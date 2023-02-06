@@ -15,7 +15,7 @@ public class WebcamCore {
     public WebcamCore(HardwareMap hardwareMap){
         int webcamView = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id",
                 hardwareMap.appContext.getPackageName());
-        WebcamName webcamName = hardwareMap.get(WebcamName.class, "NAME_OF_CAMERA_IN_CONFIG_FILE");
+        WebcamName webcamName = hardwareMap.get(WebcamName.class, "Webcam");
         Pipeline pipeline = new Pipeline();
 
         webcam = OpenCvCameraFactory.getInstance().createWebcam(webcamName, webcamView);
