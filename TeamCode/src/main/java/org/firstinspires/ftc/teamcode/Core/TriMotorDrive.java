@@ -39,6 +39,10 @@ public class TriMotorDrive {
      * @param centerVelocity - power sent to the center motor
      */
     public void setMoveVelocity(double leftVelocity, double rightVelocity, double centerVelocity) {
+        if (leftVelocity == rightVelocity && rightVelocity == centerVelocity && // All are equal
+                leftVelocity == 0) { // All equal values are 0
+            return;
+        }
         if (leftMotor.getMode() != DcMotor.RunMode.RUN_USING_ENCODER) {
             leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -72,8 +76,11 @@ public class TriMotorDrive {
     /** If the motors are in RUN_TO_POSITION, motors progress to their target position */
     public void update() {
         if (leftMotor.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
+            leftMotor.setTargetPosition(leftMotor.getTargetPosition());
             leftMotor.setPower(1);
+            rightMotor.setTargetPosition(rightMotor.getTargetPosition());
             rightMotor.setPower(1);
+            centerMotor.setTargetPosition(centerMotor.getTargetPosition());
             centerMotor.setPower(1);
         }
     }
