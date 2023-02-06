@@ -25,6 +25,10 @@ public class TankDrive2p extends ClawSlideManager {
         drive.setMoveVelocity(left, right, center);
         drive.telemetry(telemetry, left, right, center);
 
+        //Snap Turn
+        if(gamepad1.dpad_left)drive.moveInches(5, -5, 0);
+        if(gamepad1.dpad_right)drive.moveInches(-5, 5, 0);
+
         cameraServo.resetCameraServo();
 
         updateClaw(2);
