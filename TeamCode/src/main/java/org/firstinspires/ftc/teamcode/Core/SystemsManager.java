@@ -78,14 +78,14 @@ public abstract class SystemsManager extends OpMode {
                 right = gamepad1.right_stick_y;
                 center = gamepad1.right_trigger - gamepad1.left_trigger;
                 // Snap turn
-                if (pDpadLeft == false && gamepad1.dpad_left) {
+                if (!pDpadLeft && gamepad1.dpad_left) {
                     drive.moveInches(5, -5, 0);
-                    pDpadLeft = true;
                 }
-                if (pDpadRight == false && gamepad1.dpad_right) {
+                if (!pDpadRight && gamepad1.dpad_right) {
                     drive.moveInches(-5, 5, 0);
-                    pDpadRight = true;
                 }
+                pDpadLeft = gamepad1.dpad_left;
+                pDpadRight = gamepad1.dpad_right;
                 break;
             case 2:
                 // Move left/right wheels based on left/right stick movement
@@ -103,9 +103,5 @@ public abstract class SystemsManager extends OpMode {
         drive.setMoveVelocity(left, right, center);
         drive.telemetry(telemetry, left, right, center);
         drive.update();
-
-        //Snap Reset
-        pDpadLeft = false;
-        pDpadRight = false;
     }
 }
