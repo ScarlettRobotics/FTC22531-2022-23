@@ -8,6 +8,9 @@ public abstract class SystemsManager extends OpMode {
     protected ClawCore claw;
     protected SlideCore slide;
 
+    protected boolean pDpadLeft;
+    protected boolean pDpadRight;
+
     protected CameraServoCore cameraServo;
     // Stores previous states of listed buttons
     private boolean pgamepad_dpad_up = false;
@@ -75,8 +78,14 @@ public abstract class SystemsManager extends OpMode {
                 right = gamepad1.right_stick_y;
                 center = gamepad1.right_trigger - gamepad1.left_trigger;
                 // Snap turn
-                if (gamepad1.dpad_left) drive.moveInches(5, -5, 0);
-                if (gamepad1.dpad_right) drive.moveInches(-5, 5, 0);
+                if (pDpadLeft == false && gamepad1.dpad_left) {
+                    drive.moveInches(5, -5, 0);
+                    pDpadLeft = true;
+                }
+                if (pDpadRight == false && gamepad1.dpad_right) {
+                    drive.moveInches(-5, 5, 0);
+                    pDpadRight = true;
+                }
                 break;
             case 2:
                 // Move left/right wheels based on left/right stick movement
@@ -84,13 +93,7 @@ public abstract class SystemsManager extends OpMode {
                 right = gamepad2.right_stick_y;
                 center = gamepad2.right_trigger - gamepad2.left_trigger;
                 // Snap turn
-                while (gamepad2.dpad_left) {
-                    drive.moveInches(5, -5, 0);
-                    break;
-                }
-                while (gamepad2.dpad_right) {
-                    drive.moveInches(-5, 5, 0);
-                }
+
                 break;
             default:
                 left = 0;
@@ -100,5 +103,9 @@ public abstract class SystemsManager extends OpMode {
         drive.setMoveVelocity(left, right, center);
         drive.telemetry(telemetry, left, right, center);
         drive.update();
+
+        //Snap Reset
+        pDpadLeft = false;
+        pDpadRight = false;
     }
 }
