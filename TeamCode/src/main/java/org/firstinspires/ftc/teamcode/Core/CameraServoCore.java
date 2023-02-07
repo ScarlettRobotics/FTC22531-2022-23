@@ -28,6 +28,8 @@ public class CameraServoCore {
     }
 
     public void telemetry(Telemetry telemetry){
-        telemetry.addData("Camera Servo POS", cameraServo.getPosition());
+        telemetry.addData("\nCurrent class:", "CameraServoCore.java");
+        telemetry.addData("Camera servo pos:",
+                "%4.2f", cameraServo.getPosition());
     }
 }

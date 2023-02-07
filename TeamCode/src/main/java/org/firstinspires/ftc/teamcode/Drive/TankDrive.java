@@ -14,7 +14,6 @@ public class TankDrive extends SystemsManager {
     @Override
     public void loop() {
         telemetry.addData("STATUS", "Running");
-        telemetry.update();
 
         //// DRIVETRAIN
         // Move left/right wheels based on left/right stick movement
@@ -23,11 +22,11 @@ public class TankDrive extends SystemsManager {
         double center = gamepad1.right_trigger + (-gamepad1.left_trigger);
         cameraServo.resetCameraServo();
         drive.setMoveVelocity(left, right, center);
-        drive.telemetry(telemetry, left, right, center);
+        drive.telemetry(telemetry);
         cameraServo.telemetry(telemetry);
-
 
         updateClaw(1);
         updateSlide(1);
+        telemetry.update();
     }
 }

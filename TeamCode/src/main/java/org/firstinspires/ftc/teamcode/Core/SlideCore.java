@@ -36,7 +36,8 @@ public class SlideCore {
 
 
     public void telemetry(Telemetry telemetry) {
-        telemetry.addData("Slide Y", slideMotor.getCurrentPosition());
+        telemetry.addData("\nCurrent class:", "SlideCore.java");
+        telemetry.addData("Slide Y:", slideMotor.getCurrentPosition());
     }
 
 }

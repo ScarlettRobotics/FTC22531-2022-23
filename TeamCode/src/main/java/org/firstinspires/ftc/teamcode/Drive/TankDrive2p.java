@@ -14,16 +14,14 @@ public class TankDrive2p extends SystemsManager {
     @Override
     public void loop() {
         telemetry.addData("STATUS", "Running");
-        telemetry.update();
-
-        //// DRIVETRAIN
-
-        //Snap Turn
-
-        cameraServo.resetCameraServo();
 
         updateMotor(1);
         updateClaw(2);
         updateSlide(2);
+
+        cameraServo.resetCameraServo();
+        cameraServo.telemetry(telemetry);
+
+        telemetry.update();
     }
 }

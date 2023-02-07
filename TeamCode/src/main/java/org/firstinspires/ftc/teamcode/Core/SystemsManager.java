@@ -101,7 +101,7 @@ public abstract class SystemsManager extends OpMode {
                 center = 0;
         }
         drive.setMoveVelocity(left, right, center);
-        drive.telemetry(telemetry, left, right, center);
         drive.update();
+        drive.telemetry(telemetry);
     }
 }
