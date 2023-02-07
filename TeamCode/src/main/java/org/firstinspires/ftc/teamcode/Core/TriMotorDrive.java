@@ -44,7 +44,8 @@ public class TriMotorDrive {
                 leftVelocity == 0) {
             // Current powers of motors are already zero
             // i.e. doesn't need to be reset to stationary
-            if (leftMotor.getPower() == 0 && rightMotor.getPower() == 0 && centerMotor.getPower() == 0) {
+            if (leftMotor.getPower() == 0 && rightMotor.getPower() == 0 && centerMotor.getPower() == 0 &&
+                    leftMotor.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
                 return;
             }
         }
