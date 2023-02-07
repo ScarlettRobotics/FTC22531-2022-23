@@ -39,9 +39,14 @@ public class TriMotorDrive {
      * @param centerVelocity - power sent to the center motor
      */
     public void setMoveVelocity(double leftVelocity, double rightVelocity, double centerVelocity) {
-        if (leftVelocity == rightVelocity && rightVelocity == centerVelocity && // All are equal
-                leftVelocity == 0) { // All equal values are 0
-            return;
+        // All input variables equal 0
+        if (leftVelocity == rightVelocity && rightVelocity == centerVelocity &&
+                leftVelocity == 0) {
+            // Current powers of motors are already zero
+            // i.e. doesn't need to be reset to stationary
+            if (leftMotor.getPower() == 0 && rightMotor.getPower() == 0 && centerMotor.getPower() == 0) {
+                return;
+            }
         }
         if (leftMotor.getMode() != DcMotor.RunMode.RUN_USING_ENCODER) {
             leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
