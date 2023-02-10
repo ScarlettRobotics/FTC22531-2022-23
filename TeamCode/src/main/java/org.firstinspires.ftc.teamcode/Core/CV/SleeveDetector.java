@@ -1,17 +1,15 @@
-package org.firstinspires.ftc.teamcode.Core;
+package org.firstinspires.ftc.teamcode.Core.CV;
 
 import org.opencv.core.*;
 
 /** Class that detects what position the sleeve is on */
 public class SleeveDetector {
     final Pipeline pipeline;
-    SleeveDetector() {
+    public SleeveDetector() {
         pipeline = new Pipeline();
     }
 
     public int sleevePos() {
-        String favouredColour;
-
         // Sum of white pixels of respective Mat
         Scalar sumPixelsGreen = Core.sumElems(pipeline.getHsvFilterGreen());
         Scalar sumPixelsOrange = Core.sumElems(pipeline.getHsvFilterOrange());

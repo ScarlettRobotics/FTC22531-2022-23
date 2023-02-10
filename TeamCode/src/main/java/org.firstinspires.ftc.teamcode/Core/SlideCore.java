@@ -30,25 +30,14 @@ public class SlideCore {
     public void slideStop(){
         slideMotor.setPower(0);
     }
-
     public void slideManual(double power){
         slideMotor.setPower(power);
     }
 
-    public void telemetry(Telemetry telemetry) {
-        telemetry.addData("Slide Y", slideMotor.getCurrentPosition());
-    }
 
-    // Currently, this code doesn't
-    /* Moves the slide by the given amount * /
-    public void linearAdjustHeight(int amount) {
-        goalPosition += amount;
-    /* Updates the slide to move it towards a wanted position.
-     * If this code isn't run, the slide will overshoot its target. * /
-    public void update() {
-        slideMotor.setTargetPosition(goalPosition - slideMotor.getCurrentPosition());
-        slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slideMotor.setPower(1);
-    } //*/
+    public void telemetry(Telemetry telemetry) {
+        telemetry.addData("\nCurrent class:", "SlideCore.java");
+        telemetry.addData("Slide Y:", slideMotor.getCurrentPosition());
+    }
 
 }

@@ -11,8 +11,12 @@ public class CameraServoCore {
         cameraServo = hardwareMap.get(Servo.class, "webcam_servo");
     }
 
-    public void setCamera(){
-        cameraServo.setPosition(0.90);
+    public void resetCameraServo(){
+        setCameraServo(0.90);
+    }
+
+    public void setCameraServo(double pos) {
+        cameraServo.setPosition(pos);
     }
 
     public void cameraUp(){
@@ -24,6 +28,8 @@ public class CameraServoCore {
     }
 
     public void telemetry(Telemetry telemetry){
-        telemetry.addData("Camera Servo POS", cameraServo.getPosition());
+        telemetry.addData("\nCurrent class:", "CameraServoCore.java");
+        telemetry.addData("Camera servo pos:",
+                "%4.2f", cameraServo.getPosition());
     }
 }
