@@ -12,15 +12,25 @@ package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+<<<<<<< Updated upstream
 import org.firstinspires.ftc.teamcode.Core.CameraServoCore;
 import org.firstinspires.ftc.teamcode.Core.ClawCore;
 import org.firstinspires.ftc.teamcode.Core.SlideCore;
 import org.firstinspires.ftc.teamcode.Core.TriMotorDrive;
+=======
+import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.teamcode.Core.*;
+import org.firstinspires.ftc.teamcode.Core.CV.*;
+>>>>>>> Stashed changes
 
 @Autonomous(name="Left Auto", group="Robot")
 
 public class LeftAuto extends LinearOpMode {
+<<<<<<< Updated upstream
 
+=======
+    private ElapsedTime runtime = new ElapsedTime();
+>>>>>>> Stashed changes
     protected TriMotorDrive drive;
     protected ClawCore claw;
     protected SlideCore slide;
@@ -29,14 +39,24 @@ public class LeftAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+
+        waitForStart();
+        runtime.reset();
+
         // Define classes
         drive = new TriMotorDrive(hardwareMap);
         claw = new ClawCore(hardwareMap);
         slide = new SlideCore(hardwareMap);
+<<<<<<< Updated upstream
+=======
+
+       // webcam = new WebcamCore(hardwareMap);
+>>>>>>> Stashed changes
         cameraServo = new CameraServoCore(hardwareMap);
         // Telemetry
         telemetry.addData("FTC Team #", "22531");
 
+<<<<<<< Updated upstream
         //Stage 1: Scan and prepare for movements
         cameraServo.setCamera();
 
@@ -45,36 +65,54 @@ public class LeftAuto extends LinearOpMode {
         //wait and scan
 
         // strafe right to center on tile
+=======
+        //sleeveDetector = new SleeveDetector();
 
-        //proceed forward
+         while(opModeIsActive()){
+            //Stage 1: Scan and prepare for movements
+            cameraServo.resetCameraServo();
+            claw.close();
+            //int sleevePos = sleeveDetector.sleevePos();
 
-        //raise arm
+            drive.moveInches(10, 10, 0);
+            // strafe right to center on tile
+                telemetry.addData("FTC Team #", "22531");
+                //telemetry.addData("sleevePos", sleevePos);
+                telemetry.update();
+                //TODO
 
-        //turn right to post
+            //proceed forward
+>>>>>>> Stashed changes
 
-        //forward to post
+            //raise arm
 
-        //slide down slightly
+            //turn right to post
 
-        claw.open(); // To drop cone
+            //forward to post
 
-        // Raise claw
+            //slide down slightly
 
-        //Reverse
+            claw.open(); // To drop cone
 
-        //Lower slide
+            // Raise claw
+
+            //Reverse
+
+            //Lower slide
 
 
-        //PARK
+            //PARK
 
-        //switch state based on cam
-        //park 1
+            //switch state based on cam
+            //park 1
 
-        //park 2
+            //park 2
 
-        //park 3
+            //park 3
 
-        //fin - burn rest of time standing still
+            //fin - burn rest of time standing still
+         }
+
 
 
     }
