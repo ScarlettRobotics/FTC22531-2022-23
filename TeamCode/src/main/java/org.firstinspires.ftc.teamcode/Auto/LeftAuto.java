@@ -12,6 +12,7 @@ package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Core.*;
 import org.firstinspires.ftc.teamcode.Core.CV.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -19,14 +20,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @Autonomous(name="Left Auto", group="Auto")
 
 public class LeftAuto extends LinearOpMode {
-    private ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     protected TriMotorDrive drive;
     protected ClawCore claw;
     protected SlideCore slide;
 
-    protected WebcamCore webcam;
+    //protected WebcamCore webcam; TODO
     protected CameraServoCore cameraServo;
-    protected SleeveDetector sleeveDetector;
+    //protected SleeveDetector sleeveDetector; TODO
 
     @Override
     public void runOpMode() {
@@ -38,40 +39,41 @@ public class LeftAuto extends LinearOpMode {
         claw = new ClawCore(hardwareMap);
         slide = new SlideCore(hardwareMap);
 
-        webcam = new WebcamCore(hardwareMap);
+        //webcam = new WebcamCore(hardwareMap); TODO
         cameraServo = new CameraServoCore(hardwareMap);
 
-        sleeveDetector = new SleeveDetector();
+        //sleeveDetector = new SleeveDetector(); TODO
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         //Stage 1: Scan and prepare for movements
-        int sleevePos = sleeveDetector.sleevePos();
+        //int sleevePos = sleeveDetector.sleevePos(); TODO
         waitForStart();
 
         runtime.reset();
         cameraServo.resetCameraServo();
-        claw.close();
-        //drive.moveInches(10, 10, 0);
+        // TODO rightMotor moves before leftMotor; they should move at the same time
+        drive.moveInches(40, 40, 0);
         // strafe right to center on tile
 
         // run until the end of match (driver pressed STOP)
         while(opModeIsActive()) {
-            if ((runtime.time() % 100) % 2 == 1) {
+            if ((int)(runtime.time() / 600) % 2 == 1) {
                 claw.close();
             } else {
                 claw.open();
             }
+
             drive.update();
             // Telemetry
             telemetry.addData("FTC Team #", "22531");
             telemetry.addData("Elapsed time", "%4.2f", runtime.time());
-            telemetry.addData("sleevePos", sleevePos);
+            drive.telemetry(telemetry);
+            //telemetry.addData("sleevePos", sleevePos); TODO
             telemetry.update();
             //TODO
         }
-
         //proceed forward
 
         //raise arm
