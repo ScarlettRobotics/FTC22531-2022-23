@@ -12,34 +12,24 @@ package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-<<<<<<< Updated upstream
-import org.firstinspires.ftc.teamcode.Core.CameraServoCore;
-import org.firstinspires.ftc.teamcode.Core.ClawCore;
-import org.firstinspires.ftc.teamcode.Core.SlideCore;
-import org.firstinspires.ftc.teamcode.Core.TriMotorDrive;
-=======
-import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Core.*;
 import org.firstinspires.ftc.teamcode.Core.CV.*;
->>>>>>> Stashed changes
+import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Left Auto", group="Robot")
+@Autonomous(name="Left Auto", group="Auto")
 
 public class LeftAuto extends LinearOpMode {
-<<<<<<< Updated upstream
-
-=======
     private ElapsedTime runtime = new ElapsedTime();
->>>>>>> Stashed changes
     protected TriMotorDrive drive;
     protected ClawCore claw;
     protected SlideCore slide;
 
+    protected WebcamCore webcam;
     protected CameraServoCore cameraServo;
+    protected SleeveDetector sleeveDetector;
 
     @Override
     public void runOpMode() {
-
         waitForStart();
         runtime.reset();
 
@@ -47,72 +37,70 @@ public class LeftAuto extends LinearOpMode {
         drive = new TriMotorDrive(hardwareMap);
         claw = new ClawCore(hardwareMap);
         slide = new SlideCore(hardwareMap);
-<<<<<<< Updated upstream
-=======
 
-       // webcam = new WebcamCore(hardwareMap);
->>>>>>> Stashed changes
+        webcam = new WebcamCore(hardwareMap);
         cameraServo = new CameraServoCore(hardwareMap);
-        // Telemetry
-        telemetry.addData("FTC Team #", "22531");
 
-<<<<<<< Updated upstream
+        sleeveDetector = new SleeveDetector();
+
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
+
         //Stage 1: Scan and prepare for movements
-        cameraServo.setCamera();
+        int sleevePos = sleeveDetector.sleevePos();
+        waitForStart();
 
-        claw.close(); // Grabs cone positioned in front
-
-        //wait and scan
-
+        runtime.reset();
+        cameraServo.resetCameraServo();
+        claw.close();
+        //drive.moveInches(10, 10, 0);
         // strafe right to center on tile
-=======
-        //sleeveDetector = new SleeveDetector();
 
-         while(opModeIsActive()){
-            //Stage 1: Scan and prepare for movements
-            cameraServo.resetCameraServo();
-            claw.close();
-            //int sleevePos = sleeveDetector.sleevePos();
+        // run until the end of match (driver pressed STOP)
+        while(opModeIsActive()) {
+            if ((runtime.time() % 100) % 2 == 1) {
+                claw.close();
+            } else {
+                claw.open();
+            }
+            drive.update();
+            // Telemetry
+            telemetry.addData("FTC Team #", "22531");
+            telemetry.addData("Elapsed time", "%4.2f", runtime.time());
+            telemetry.addData("sleevePos", sleevePos);
+            telemetry.update();
+            //TODO
+        }
 
-            drive.moveInches(10, 10, 0);
-            // strafe right to center on tile
-                telemetry.addData("FTC Team #", "22531");
-                //telemetry.addData("sleevePos", sleevePos);
-                telemetry.update();
-                //TODO
+        //proceed forward
 
-            //proceed forward
->>>>>>> Stashed changes
+        //raise arm
 
-            //raise arm
+        //turn right to post
 
-            //turn right to post
+        //forward to post
 
-            //forward to post
+        //slide down slightly
 
-            //slide down slightly
+        claw.open(); // To drop cone
 
-            claw.open(); // To drop cone
+        // Raise claw
 
-            // Raise claw
+        //Reverse
 
-            //Reverse
-
-            //Lower slide
+        //Lower slide
 
 
-            //PARK
+        //PARK
 
-            //switch state based on cam
-            //park 1
+        //switch state based on cam
+        //park 1
 
-            //park 2
+        //park 2
 
-            //park 3
+        //park 3
 
-            //fin - burn rest of time standing still
-         }
-
+        //fin - burn rest of time standing still
 
 
     }
