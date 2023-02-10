@@ -28,6 +28,14 @@ public class TriMotorDrive {
         leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         centerMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        centerMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        leftMotor.setTargetPosition(0);
+        rightMotor.setTargetPosition(0);
+        centerMotor.setTargetPosition(0);
     }
 
 
@@ -39,16 +47,14 @@ public class TriMotorDrive {
      * @param centerVelocity - power sent to the center motor
      */
     public void setMoveVelocity(double leftVelocity, double rightVelocity, double centerVelocity) {
-        // All input variables equal 0
-        if (leftVelocity == rightVelocity && rightVelocity == centerVelocity &&
-                leftVelocity == 0) {
-            // Current powers of motors are already zero
-            // i.e. doesn't need to be reset to stationary
-            if (leftMotor.getPower() == 0 && rightMotor.getPower() == 0 && centerMotor.getPower() == 0 &&
-                    leftMotor.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
+        if (leftMotor.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
+            if (leftVelocity == 0 &&
+                    rightVelocity == 0 &&
+                    centerVelocity == 0) {
                 return;
             }
         }
+
         if (leftMotor.getMode() != DcMotor.RunMode.RUN_USING_ENCODER) {
             leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -67,16 +73,17 @@ public class TriMotorDrive {
 
     /** Uses RUN_TO_POSITION to move the motors by a distance. */
     public void moveInches(double leftInches, double rightInches, double centerInches) {
-        // Change target position of motors
-        leftMotor.setTargetPosition(leftMotor.getTargetPosition() + inchesToEncoderValues(leftInches));
-        rightMotor.setTargetPosition(rightMotor.getTargetPosition() + inchesToEncoderValues(rightInches));
-        centerMotor.setTargetPosition(centerMotor.getTargetPosition() + inchesToEncoderValues(centerInches));
-        // Set motor run modes to RUN_TO_POSITION if not previously done so
-        if (leftMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
-            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            centerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        }
+        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        centerMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        leftMotor.setTargetPosition(inchesToEncoderValues(leftInches));
+        rightMotor.setTargetPosition(inchesToEncoderValues(rightInches));
+        centerMotor.setTargetPosition(inchesToEncoderValues(centerInches));
+
+        leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        centerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     /** If the motors are in RUN_TO_POSITION, motors progress to their target position */
