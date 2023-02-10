@@ -79,10 +79,10 @@ public abstract class SystemsManager extends OpMode {
                 center = gamepad1.right_trigger - gamepad1.left_trigger;
                 // Snap turn
                 if (!pDpadLeft && gamepad1.dpad_left) {
-                    drive.moveInches(15, -15, 0);
+                    drive.moveInches(11, -11, 0);
                 }
                 if (!pDpadRight && gamepad1.dpad_right) {
-                    drive.moveInches(-15, 15, 0);
+                    drive.moveInches(-11, 11, 0);
                 }
                 pDpadLeft = gamepad1.dpad_left;
                 pDpadRight = gamepad1.dpad_right;
