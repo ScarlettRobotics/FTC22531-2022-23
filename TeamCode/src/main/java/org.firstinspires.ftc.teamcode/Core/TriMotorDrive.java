@@ -77,8 +77,8 @@ public class TriMotorDrive {
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         centerMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftMotor.setTargetPosition(inchesToEncoderValues(leftInches));
-        rightMotor.setTargetPosition(inchesToEncoderValues(rightInches));
+        leftMotor.setTargetPosition(-inchesToEncoderValues(leftInches));
+        rightMotor.setTargetPosition(-inchesToEncoderValues(rightInches));
         centerMotor.setTargetPosition(inchesToEncoderValues(centerInches));
 
         leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
