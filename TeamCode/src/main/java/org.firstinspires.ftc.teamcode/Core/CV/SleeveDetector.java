@@ -18,7 +18,7 @@ public class SleeveDetector {
 
     public void updateSleevePos() {
         // Sum of white pixels of respective Mat
-        sumPixelsPink = Core.sumElems(pipeline.getHsvFilterPurple());
+        sumPixelsPink = Core.sumElems(pipeline.getHsvFilterPink());
         sumPixelsGreen = Core.sumElems(pipeline.getHsvFilterGreen());
         sumPixelsOrange = Core.sumElems(pipeline.getHsvFilterOrange());
 
@@ -34,8 +34,6 @@ public class SleeveDetector {
         }
         // error
         sleevePos = 0;
-
-        return sleevePos;
     }
 
     private double sumScalar(Scalar in) {
