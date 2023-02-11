@@ -9,14 +9,16 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 /** Manages the webcam of the camera to be used by the autonomous portion of running. */
 public class WebcamCore {
     private OpenCvCamera webcam;
+    private Pipeline pipeline;
+    private WebcamName webcamName;
 
     // FOR INFO ON WHAT THESE LINES OF CODE ARE DOING, SEE:
     // https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/user_docs/camera_initialization_overview.md
     public WebcamCore(HardwareMap hardwareMap){
         int webcamView = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id",
                 hardwareMap.appContext.getPackageName());
-        WebcamName webcamName = hardwareMap.get(WebcamName.class, "Webcam");
-        Pipeline pipeline = new Pipeline();
+        webcamName = hardwareMap.get(WebcamName.class, "Webcam");
+        pipeline = new Pipeline();
 
         webcam = OpenCvCameraFactory.getInstance().createWebcam(webcamName, webcamView);
         webcam.setPipeline(pipeline);

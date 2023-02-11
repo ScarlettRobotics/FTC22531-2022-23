@@ -29,26 +29,12 @@ public class LeftAuto extends LinearOpMode {
     protected CameraServoCore cameraServo;
     protected SleeveDetector sleeveDetector;
 
+    private int sleevePos;
+
     @Override
     public void runOpMode() {
-        waitForStart();
-        runtime.reset();
+        initialize();
 
-        // Define classes
-        drive = new TriMotorDrive(hardwareMap);
-        claw = new ClawCore(hardwareMap);
-        slide = new SlideCore(hardwareMap);
-
-        webcam = new WebcamCore(hardwareMap);
-        cameraServo = new CameraServoCore(hardwareMap);
-
-        sleeveDetector = new SleeveDetector();
-
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
-
-        //Stage 1: Scan and prepare for movements
-        int sleevePos = sleeveDetector.sleevePos();
         waitForStart();
 
         runtime.reset();
@@ -65,14 +51,9 @@ public class LeftAuto extends LinearOpMode {
                 claw.open();
             }
 
-            drive.update();
-            // Telemetry
-            telemetry.addData("FTC Team #", "22531");
-            telemetry.addData("Elapsed time", "%4.2f", runtime.time());
-            drive.telemetry(telemetry);
-            telemetry.addData("sleevePos", sleevePos);
-            telemetry.update();
             //TODO
+            drive.update();
+            addTelemetry(telemetry);
         }
         //proceed forward
 
@@ -105,5 +86,32 @@ public class LeftAuto extends LinearOpMode {
         //fin - burn rest of time standing still
 
 
+    }
+
+    /** Runs everything related to class setup */
+    private void initialize() {
+        // Define classes
+        drive = new TriMotorDrive(hardwareMap);
+        claw = new ClawCore(hardwareMap);
+        slide = new SlideCore(hardwareMap);
+
+        webcam = new WebcamCore(hardwareMap);
+        cameraServo = new CameraServoCore(hardwareMap);
+
+        sleeveDetector = new SleeveDetector();
+
+        sleeveDetector.updateSleevePos();
+        sleevePos = sleeveDetector.getSleevePos();
+
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
+    }
+
+    private void addTelemetry(Telemetry telemetry) {
+        telemetry.addData("FTC Team #", "22531");
+        telemetry.addData("Elapsed time", "%4.2f", runtime.time());
+        drive.telemetry(telemetry);
+        sleeveDetector.telemetry(telemetry);
+        telemetry.update();
     }
 }

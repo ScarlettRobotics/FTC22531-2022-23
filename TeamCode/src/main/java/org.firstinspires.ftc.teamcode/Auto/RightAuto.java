@@ -35,7 +35,7 @@ public class RightAuto extends LinearOpMode {
         //Stage 1: Scan and prepare for movements
         cameraServo.resetCameraServo();
         claw.close();
-        int sleevePos = sleeveDetector.sleevePos();
+        int sleevePos = sleeveDetector.updateSleevePos();
         telemetry.addData("sleevePos", sleevePos);
 
         // strafe left to center on tile
