@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Core;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.android.dx.util.IntList;
 import java.util.ArrayList;
 
@@ -37,5 +38,11 @@ public class AutoEventHandler {
         }
         previouslyRan.set(index, true);
         return true;
+    }
+    
+    public void telemetry(Telemetry telemetry) {
+        telemetry.addData("\nCurrent class", "AutoEventHandler.java");
+        telemetry.addData("timesToCheck", timesToCheck);
+        telemetry.addData("previouslyRan", previouslyRan);
     }
 }

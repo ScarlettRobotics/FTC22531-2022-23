@@ -60,7 +60,7 @@ public class LeftAuto extends LinearOpMode {
 
             // Move slide motor up
             if (autoEventHandler.actionOccurred(2, runtime.time())) {
-                slide.slideManual(1);
+                slide.slideManual(0.8);
             }
 
             // Centre with pole
@@ -76,7 +76,7 @@ public class LeftAuto extends LinearOpMode {
 
             // Slightly move slide down
             if (autoEventHandler.actionOccurred(5, runtime.time())) {
-                slide.slideManual(-1);
+                slide.slideManual(-0.6);
             }
 
             // Drop cone on slide
@@ -143,6 +143,7 @@ public class LeftAuto extends LinearOpMode {
         telemetry.addData("Elapsed time", "%4.2f", runtime.time());
         drive.telemetry(telemetry);
         sleeveDetector.telemetry(telemetry);
+        autoEventHandler.telemetry(telemetry);
         telemetry.update();
     }
 }
