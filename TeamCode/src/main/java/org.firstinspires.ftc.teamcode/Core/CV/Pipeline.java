@@ -21,10 +21,6 @@ public class Pipeline extends OpenCvPipeline {
 	private Mat hsvFilterGreen = new Mat();
 	private Mat hsvFilterOrange = new Mat();
 
-	static {
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-	}
-
 	/**
 	 * This is the primary method that runs the entire pipeline and updates the outputs.
 	 */
