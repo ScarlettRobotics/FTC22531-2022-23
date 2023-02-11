@@ -25,9 +25,9 @@ public class LeftAuto extends LinearOpMode {
     protected ClawCore claw;
     protected SlideCore slide;
 
-    //protected WebcamCore webcam; TODO
+    protected WebcamCore webcam;
     protected CameraServoCore cameraServo;
-    //protected SleeveDetector sleeveDetector; TODO
+    protected SleeveDetector sleeveDetector;
 
     @Override
     public void runOpMode() {
@@ -39,22 +39,22 @@ public class LeftAuto extends LinearOpMode {
         claw = new ClawCore(hardwareMap);
         slide = new SlideCore(hardwareMap);
 
-        //webcam = new WebcamCore(hardwareMap); TODO
+        webcam = new WebcamCore(hardwareMap);
         cameraServo = new CameraServoCore(hardwareMap);
 
-        //sleeveDetector = new SleeveDetector(); TODO
+        sleeveDetector = new SleeveDetector();
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         //Stage 1: Scan and prepare for movements
-        //int sleevePos = sleeveDetector.sleevePos(); TODO
+        int sleevePos = sleeveDetector.sleevePos();
         waitForStart();
 
         runtime.reset();
         cameraServo.resetCameraServo();
         // TODO rightMotor moves before leftMotor; they should move at the same time
-        drive.moveInches(40, 40, 0);
+        //drive.moveInches(40, 40, 0);
         // strafe right to center on tile
 
         // run until the end of match (driver pressed STOP)
@@ -70,7 +70,7 @@ public class LeftAuto extends LinearOpMode {
             telemetry.addData("FTC Team #", "22531");
             telemetry.addData("Elapsed time", "%4.2f", runtime.time());
             drive.telemetry(telemetry);
-            //telemetry.addData("sleevePos", sleevePos); TODO
+            telemetry.addData("sleevePos", sleevePos);
             telemetry.update();
             //TODO
         }
