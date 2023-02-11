@@ -21,15 +21,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class LeftAuto extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+
     protected TriMotorDrive drive;
     protected ClawCore claw;
     protected SlideCore slide;
-
     protected WebcamCore webcam;
     protected CameraServoCore cameraServo;
-    protected SleeveDetector sleeveDetector;
 
-    private int sleevePos;
+    protected SleeveDetector sleeveDetector;
 
     @Override
     public void runOpMode() {
@@ -39,6 +38,9 @@ public class LeftAuto extends LinearOpMode {
 
         runtime.reset();
         cameraServo.resetCameraServo();
+
+        sleeveDetector.updateSleevePos();
+
         // TODO rightMotor moves before leftMotor; they should move at the same time
         //drive.moveInches(40, 40, 0);
         // strafe right to center on tile
@@ -99,9 +101,6 @@ public class LeftAuto extends LinearOpMode {
         cameraServo = new CameraServoCore(hardwareMap);
 
         sleeveDetector = new SleeveDetector();
-
-        sleeveDetector.updateSleevePos();
-        sleevePos = sleeveDetector.getSleevePos();
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
