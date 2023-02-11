@@ -58,34 +58,36 @@ public class LeftAuto extends LinearOpMode {
                 drive.moveInches(100, 100, 30);
             }
 
-            // Move to highest position
-            if (3000 < runtime.time() && runtime.time() <= 6000) {
-                slide.slideUp();
+            // Move slide motor up
+            if (autoEventHandler.actionOccurred(2, runtime.time())) {
+                slide.slideManual(1);
             }
 
             // Centre with pole
-            if (autoEventHandler.actionOccurred(2, runtime.time())) {
+            if (autoEventHandler.actionOccurred(3, runtime.time())) {
                 drive.moveInches(0, 0, 11);
+                slide.slideManual(0);
             }
 
             // Move slightly forward
-            if (autoEventHandler.actionOccurred(3, runtime.time())) {
+            if (autoEventHandler.actionOccurred(4, runtime.time())) {
                 drive.moveInches(5, 5, 0);
             }
 
             // Slightly move slide down
-            if (8000 < runtime.time() && runtime.time() <= 8300) {
-                slide.slideDown();
+            if (autoEventHandler.actionOccurred(5, runtime.time())) {
+                slide.slideManual(-1);
             }
 
             // Drop cone on slide
-            if (autoEventHandler.actionOccurred(4, runtime.time())) {
+            if (autoEventHandler.actionOccurred(6, runtime.time())) {
+                slide.slideManual(0);
                 claw.open();
                 drive.moveInches(-5, -5, 0);
             }
 
             // Park to correct position
-            if (autoEventHandler.actionOccurred(5, runtime.time())) {
+            if (autoEventHandler.actionOccurred(7, runtime.time())) {
                 if (sleeveDetector.getSleevePos() == 1) {
                     drive.moveInches(0, 0, -33);
                 } else if (sleeveDetector.getSleevePos() == 3) {
@@ -128,8 +130,10 @@ public class LeftAuto extends LinearOpMode {
         // Add times where the robot takes actions
         autoEventHandler.addDetectionTime(0);
         autoEventHandler.addDetectionTime(1000);
+        autoEventHandler.addDetectionTime(3000);
         autoEventHandler.addDetectionTime(6000);
         autoEventHandler.addDetectionTime(7000);
+        autoEventHandler.addDetectionTime(8000);
         autoEventHandler.addDetectionTime(8300);
         autoEventHandler.addDetectionTime(10000);
     }
