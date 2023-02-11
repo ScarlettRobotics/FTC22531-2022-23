@@ -16,6 +16,11 @@ public class AutoEventHandler {
     private IntList timesToCheck;
     private ArrayList<Boolean> previouslyRan;
 
+    public AutoEventHandler() {
+        timesToCheck = new IntList();
+        previouslyRan = new ArrayList<Boolean>();
+    }
+
     /** TODO */
     public void addDetectionTime(int millis) {
         timesToCheck.add(millis);
