@@ -23,7 +23,7 @@ public class AutoEventHandler {
     }
 
     /** TODO */
-    public boolean actionOccurred(int index, int timeMillis) {
+    public boolean actionOccurred(int index, double timeMillis) {
         if (previouslyRan.get(index)) {
             return false;
         }
