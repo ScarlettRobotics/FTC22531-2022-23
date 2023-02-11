@@ -51,8 +51,8 @@ public class ClawCore {
     }
 
     public void telemetry(Telemetry telemetry) {
-        telemetry.addData("\nCurrent class:", "ClawCore.java");
-        telemetry.addData("rightClaw position:", rightClaw.getPosition());
+        telemetry.addData("\nCurrent class", "ClawCore.java");
+        telemetry.addData("rightClaw position", rightClaw.getPosition());
         telemetry.addData("leftClaw position", leftClaw.getPosition());
     }
 }

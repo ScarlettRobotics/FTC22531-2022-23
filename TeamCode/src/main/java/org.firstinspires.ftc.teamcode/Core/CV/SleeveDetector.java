@@ -41,6 +41,7 @@ public class SleeveDetector {
     }
 
     public void telemetry(Telemetry telemetry) {
+        telemetry.addData("\nCurrent class", "SleeveDetector.java");
         telemetry.addData("sumPixelsPink", sumPixelsPink);
         telemetry.addData("sumPixelsGreen", sumPixelsGreen);
         telemetry.addData("sumPixelsOrange", sumPixelsOrange);

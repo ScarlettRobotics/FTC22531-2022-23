@@ -99,22 +99,22 @@ public class TriMotorDrive {
     }
 
     public void telemetry(Telemetry telemetry) {
-        telemetry.addData("\nCurrent class:", "TriMotorDrive.java");
-        telemetry.addData("runMode:", leftMotor.getMode());
+        telemetry.addData("\nCurrent class", "TriMotorDrive.java");
+        telemetry.addData("runMode", leftMotor.getMode());
         if (leftMotor.getMode() == DcMotor.RunMode.RUN_USING_ENCODER) {
             telemetry.addData("Left Power",
                     "%4.2f", leftMotor.getPower());
-            telemetry.addData("Right Power:",
+            telemetry.addData("Right Power",
                     "%4.2f", rightMotor.getPower());
-            telemetry.addData("Center Power:",
+            telemetry.addData("Center Power",
                     "%4.2f", centerMotor.getPower());
         }
         if (leftMotor.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
-            telemetry.addData("Left Position & Target:",
+            telemetry.addData("Left Position & Target",
                     "%d %d", leftMotor.getCurrentPosition(), leftMotor.getTargetPosition());
-            telemetry.addData("Right Position & Target:",
+            telemetry.addData("Right Position & Target",
                     "%d %d", rightMotor.getCurrentPosition(), rightMotor.getTargetPosition());
-            telemetry.addData("Center Position & Target:",
+            telemetry.addData("Center Position & Target",
                     "%d %d", centerMotor.getCurrentPosition(), centerMotor.getTargetPosition());
         }
     }
