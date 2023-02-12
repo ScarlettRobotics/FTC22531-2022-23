@@ -75,12 +75,15 @@ public class RightAuto extends LinearOpMode {
 
             // Park to correct position
             if (autoEventHandler.actionOccurred(7, runtime.time())) {
-                if (sleeveDetector.getSleevePos() == 1) {
-                    drive.moveInches(0, 0, 33);
-                } else if (sleeveDetector.getSleevePos() == 3) {
-                    drive.moveInches(0, 0, -11);
-                } else {
-                    drive.moveInches(0, 0, 11);
+                switch (sleeveDetector.getSleevePos()) {
+                    case 1:
+                        drive.moveInches(0, 0, 33);
+                        break;
+                    case 3:
+                        drive.moveInches(0, 0, -11);
+                        break;
+                    default:
+                        drive.moveInches(0, 0, 11);
                 }
             }
 
