@@ -14,7 +14,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Core.*;
-import org.firstinspires.ftc.teamcode.Core.CV.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="Left Auto", group="Auto")
@@ -25,11 +24,8 @@ public class LeftAuto extends LinearOpMode {
     protected TriMotorDrive drive;
     protected ClawCore claw;
     protected SlideCore slide;
-    // TODO protected WebcamCore webcam;
-    protected CameraServoCore cameraServo;
 
     protected AutoEventHandler autoEventHandler;
-    // TODO protected SleeveDetector sleeveDetector;
 
     @Override
     public void runOpMode() {
@@ -38,7 +34,7 @@ public class LeftAuto extends LinearOpMode {
         waitForStart();
 
         runtime.reset();
-        cameraServo.resetCameraServo();
+        // TODO cameraServo.resetCameraServo();
 
         // TODO find a way to process frames
         // TODO sleeveDetector.updateSleevePos(webcam.pipeline.getHsvFilterPink(), webcam.pipeline.getHsvFilterGreen(), webcam.pipeline.getHsvFilterOrange());
@@ -124,7 +120,7 @@ public class LeftAuto extends LinearOpMode {
         slide = new SlideCore(hardwareMap);
         //init webcam classes
         // TODO webcam = new WebcamCore(hardwareMap);
-        cameraServo = new CameraServoCore(hardwareMap);
+        // TODO cameraServo = new CameraServoCore(hardwareMap);
         //init auto classes
         autoEventHandler = new AutoEventHandler();
         // TODO sleeveDetector = new SleeveDetector();

@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Core.*;
-import org.firstinspires.ftc.teamcode.Core.CV.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="Right Auto", group="Auto")
@@ -15,11 +14,8 @@ public class RightAuto extends LinearOpMode {
     protected TriMotorDrive drive;
     protected ClawCore claw;
     protected SlideCore slide;
-    protected WebcamCore webcam;
-    protected CameraServoCore cameraServo;
 
     protected AutoEventHandler autoEventHandler;
-    protected SleeveDetector sleeveDetector;
 
     @Override
     public void runOpMode() {
@@ -28,9 +24,7 @@ public class RightAuto extends LinearOpMode {
         waitForStart();
 
         runtime.reset();
-        cameraServo.resetCameraServo();
 
-        sleeveDetector.updateSleevePos(webcam.pipeline.getHsvFilterPink(), webcam.pipeline.getHsvFilterGreen(), webcam.pipeline.getHsvFilterOrange());
 
         // TODO rightMotor moves before leftMotor; they should move at the same time
         // strafe right to center on tile
@@ -75,13 +69,7 @@ public class RightAuto extends LinearOpMode {
 
             // Park to correct position
             if (autoEventHandler.actionOccurred(7, runtime.time())) {
-                if (sleeveDetector.getSleevePos() == 1) {
-                    drive.moveInches(0, 0, 30);
-                } else if (sleeveDetector.getSleevePos() == 3) {
-                    drive.moveInches(0, 0, -10);
-                } else {
                     drive.moveInches(0, 0, 10);
-                }
             }
 
             if (autoEventHandler.actionOccurred(8, runtime.time())) {
@@ -112,11 +100,8 @@ public class RightAuto extends LinearOpMode {
         claw = new ClawCore(hardwareMap);
         slide = new SlideCore(hardwareMap);
         //init webcam classes
-        webcam = new WebcamCore(hardwareMap);
-        cameraServo = new CameraServoCore(hardwareMap);
         //init auto classes
         autoEventHandler = new AutoEventHandler();
-        sleeveDetector = new SleeveDetector();
 
         // Add times where the robot takes actions
         autoEventHandler.addDetectionTime(0);
@@ -134,7 +119,6 @@ public class RightAuto extends LinearOpMode {
         telemetry.addData("FTC Team #", "22531");
         telemetry.addData("Elapsed time", "%4.2f", runtime.time());
         drive.telemetry(telemetry);
-        sleeveDetector.telemetry(telemetry);
         autoEventHandler.telemetry(telemetry);
         telemetry.update();
     }

@@ -11,7 +11,6 @@ public abstract class SystemsManager extends OpMode {
     protected boolean pLeftBumper;
     protected boolean pRightBumper;
 
-    protected CameraServoCore cameraServo;
 
     @Override
     public void init() {
