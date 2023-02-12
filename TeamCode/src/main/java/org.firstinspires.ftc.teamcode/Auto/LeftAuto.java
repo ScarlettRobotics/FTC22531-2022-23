@@ -65,7 +65,7 @@ public class LeftAuto extends LinearOpMode {
 
             // Centre with pole
             if (autoEventHandler.actionOccurred(3, runtime.time())) {
-                drive.moveInches(0, 0, 18);
+                drive.moveInches(0, 0, 11);
             }
 
             // Move slightly forward
@@ -87,11 +87,11 @@ public class LeftAuto extends LinearOpMode {
             // Park to correct position
             if (autoEventHandler.actionOccurred(7, runtime.time())) {
                 if (sleeveDetector.getSleevePos() == 1) {
-                    drive.moveInches(0, 0, -30);
+                    drive.moveInches(0, 0, -33);
                 } else if (sleeveDetector.getSleevePos() == 3) {
-                    drive.moveInches(0, 0, 10);
+                    drive.moveInches(0, 0, 11);
                 } else {
-                    drive.moveInches(0, 0, -10);
+                    drive.moveInches(0, 0, -11);
                 }
             }
 
