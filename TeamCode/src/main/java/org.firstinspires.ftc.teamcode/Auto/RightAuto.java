@@ -48,7 +48,7 @@ public class RightAuto extends LinearOpMode {
 
             // Centre with pole
             if (autoEventHandler.actionOccurred(3, runtime.time())) {
-                drive.moveInches(0, 0, -11);
+                drive.moveInches(0, 0, -18);
             }
 
             // Move slightly forward
