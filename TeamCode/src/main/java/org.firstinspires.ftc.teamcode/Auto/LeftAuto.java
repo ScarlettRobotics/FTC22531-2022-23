@@ -40,7 +40,8 @@ public class LeftAuto extends LinearOpMode {
         runtime.reset();
         cameraServo.resetCameraServo();
 
-        sleeveDetector.updateSleevePos();
+        // TODO find a way to process frames
+        sleeveDetector.updateSleevePos(webcam.pipeline.getHsvFilterPink(), webcam.pipeline.getHsvFilterGreen(), webcam.pipeline.getHsvFilterOrange());
 
         // TODO rightMotor moves before leftMotor; they should move at the same time
         // strafe right to center on tile

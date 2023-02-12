@@ -3,52 +3,59 @@ package org.firstinspires.ftc.teamcode.Core.CV;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.*;
 
+import java.util.Arrays;
+
 /** Class that detects what position the sleeve is on */
 public class SleeveDetector {
-    final Pipeline pipeline;
-    public SleeveDetector() {
-        pipeline = new Pipeline();
-    }
-    private Scalar sumPixelsPink, sumPixelsGreen, sumPixelsOrange;
+    private double[] sumPixelsPink, sumPixelsGreen, sumPixelsOrange;
     private int sleevePos;
 
     public int getSleevePos() {
         return sleevePos;
     }
 
-    public void updateSleevePos() {
+    public void updateSleevePos(Mat hsvFilterPink, Mat hsvFilterGreen, Mat hsvFilterOrange) {
         // Sum of white pixels of respective Mat
-        sumPixelsPink = Core.sumElems(pipeline.getHsvFilterPink());
-        sumPixelsGreen = Core.sumElems(pipeline.getHsvFilterGreen());
-        sumPixelsOrange = Core.sumElems(pipeline.getHsvFilterOrange());
+        sumPixelsPink = sumPixels(hsvFilterPink);
+        sumPixelsGreen = sumPixels(hsvFilterGreen);
+        sumPixelsOrange = sumPixels(hsvFilterOrange);
 
-        if (sumScalar(sumPixelsPink) > sumScalar(sumPixelsGreen) &&
-                sumScalar(sumPixelsPink) > sumScalar(sumPixelsOrange)) {
+        if (sumPixelsPink[0] > sumPixelsGreen[0] &&
+                sumPixelsPink[0] > sumPixelsOrange[0]) {
             sleevePos = 1;
-        } else if (sumScalar(sumPixelsGreen) > sumScalar(sumPixelsOrange) &&
-                sumScalar(sumPixelsGreen) > sumScalar(sumPixelsPink)) {
+        } else if (sumPixelsGreen[0] > sumPixelsOrange[0] &&
+                sumPixelsGreen[0] > sumPixelsPink[0]) {
             sleevePos = 2;
-        } else if (sumScalar(sumPixelsOrange) > sumScalar(sumPixelsGreen) &&
-                sumScalar(sumPixelsOrange) > sumScalar(sumPixelsPink)) {
+        } else if (sumPixelsOrange[0] > sumPixelsGreen[0] &&
+                sumPixelsOrange[0] > sumPixelsPink[0]) {
             sleevePos = 3;
+        } else {
+            // error
+            sleevePos = 0;
         }
-        // error
-        sleevePos = 0;
     }
 
-    private double sumScalar(Scalar in) {
-        return in.val[0] + in.val[1] + in.val[2] + in.val[3];
+    private double[] sumPixels(Mat mask) {
+        double[] out = {0, 0, 0};
+        for (int i=0; i<mask.rows(); i++) {
+            for (int j=0; j<mask.cols(); j++) {
+                double[] temp = mask.get(i, j);
+                out[0] += temp[0];
+                out[1] += temp[1];
+                out[2] += temp[2];
+            }
+        }
+        return out;
     }
 
     public void telemetry(Telemetry telemetry) {
         telemetry.addData("\nCurrent class", "SleeveDetector.java");
-        telemetry.addData("sumPixelsPink", sumPixelsPink);
-        telemetry.addData("sumPixelsGreen", sumPixelsGreen);
-        telemetry.addData("sumPixelsOrange", sumPixelsOrange);
-
-        telemetry.addData("sumPixelsPink to double", "%4.2f", sumScalar(sumPixelsPink));
-        telemetry.addData("sumPixelsGreen to double", "%4.2f", sumScalar(sumPixelsGreen));
-        telemetry.addData("sumPixelsOrange to double", "%4.2f", sumScalar(sumPixelsOrange));
+        telemetry.addData("sumPixelsPink", "%4.2f %4.2f %4.2f",
+                sumPixelsPink[0], sumPixelsPink[1], sumPixelsOrange[2]);
+        telemetry.addData("sumPixelsGreen", "%4.2f %4.2f %4.2f",
+                sumPixelsGreen[0], sumPixelsGreen[1], sumPixelsGreen[2]);
+        telemetry.addData("sumPixelsOrange", "%4.2f %4.2f %4.2f",
+                sumPixelsOrange[0], sumPixelsOrange[1], sumPixelsOrange[2]);
 
         telemetry.addData("sleevePos", sleevePos);
     }

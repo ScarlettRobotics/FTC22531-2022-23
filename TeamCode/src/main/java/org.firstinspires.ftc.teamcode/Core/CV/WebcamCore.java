@@ -9,7 +9,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 /** Manages the webcam of the camera to be used by the autonomous portion of running. */
 public class WebcamCore {
     private OpenCvCamera webcam;
-    private Pipeline pipeline;
+    public Pipeline pipeline;
     private WebcamName webcamName;
 
     // FOR INFO ON WHAT THESE LINES OF CODE ARE DOING, SEE:
