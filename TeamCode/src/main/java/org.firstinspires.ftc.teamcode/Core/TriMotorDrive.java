@@ -18,6 +18,8 @@ public class TriMotorDrive {
     private final double INCHES_PER_ROTATION = 12.36;
 
     /** Init */
+
+    //Initializes 3 DcMotor Objects for the 3 wheels and sets movement directions
     public TriMotorDrive (HardwareMap hardwareMap) {
         // Map DcMotor variables to hardwareMap
         leftMotor = hardwareMap.get(DcMotor.class, "left_motor");
