@@ -27,8 +27,8 @@ public class TriMotorDrive {
         centerMotor = hardwareMap.get(DcMotor.class, "center_motor");
 
         // Set motor movement directions
-        leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         centerMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -79,8 +79,8 @@ public class TriMotorDrive {
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         centerMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftMotor.setTargetPosition(-inchesToEncoderValues(leftInches));
-        rightMotor.setTargetPosition(-inchesToEncoderValues(rightInches));
+        leftMotor.setTargetPosition(inchesToEncoderValues(leftInches));
+        rightMotor.setTargetPosition(inchesToEncoderValues(rightInches));
         centerMotor.setTargetPosition(inchesToEncoderValues(centerInches));
 
         leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
