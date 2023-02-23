@@ -35,16 +35,36 @@ public class SleeveDetector {
         }
     }
 
+    /** Adds the RGB values of each pixel, then outputs the result
+     * TODO BROKEN :((( */
     private double[] sumPixels(Mat mask) {
         double[] out = {0, 0, 0};
-        for (int i=0; i<mask.rows(); i++) {
-            for (int j=0; j<mask.cols(); j++) {
-                double[] temp = mask.get(i, j);
-                out[0] += temp[0];
-                out[1] += temp[1];
-                out[2] += temp[2];
+
+        mask.convertTo(mask, CvType.CV_64FC3); //New line added.
+        int size = (int) (mask.total() * mask.channels());
+        double[] pixelValue = new double[size]; // use double[] instead of byte[]
+
+        // Loop through each row
+        for (int crntRow=0; crntRow<mask.rows(); crntRow++) {
+            // Loop through each column
+            for (int crntCol=0; crntCol<mask.cols(); crntCol++) {
+                mask.get(crntRow, crntCol, pixelValue);
+                out[0] += pixelValue[0];
+                out[1] += pixelValue[1];
+                out[2] += pixelValue[2];
             }
         }
+        /* START prev code
+        // Loop through each row
+        for (int i=0; i<mask.rows(); i++) {
+            // Loop through each column
+            for (int j=0; j<mask.cols(); j++) {
+                out[0] += pixelValue[0];
+                out[1] += pixelValue[1];
+                out[2] += pixelValue[2];
+            }
+        }
+        END prev code */
         return out;
     }
 
