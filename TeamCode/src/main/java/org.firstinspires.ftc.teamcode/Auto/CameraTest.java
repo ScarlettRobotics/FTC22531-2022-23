@@ -1,49 +1,51 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.Core.CV.Pipeline;
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvWebcam;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Core.*;
+import org.firstinspires.ftc.teamcode.Core.CV.SleeveDetector;
+import org.firstinspires.ftc.teamcode.Core.CV.WebcamCore;
 
-
+/*** Constantly updates the camera, returning the sleeve that it detects. */
 @Autonomous(name="Camera Test", group = "Auto")
-public class CameraTest extends OpMode {
-    OpenCvWebcam webcam;
+public class CameraTest extends LinearOpMode {
+    private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+
+    protected SleeveDetector sleeveDetector;
+    protected WebcamCore webcam;
+    protected CameraServoCore cameraServo;
 
     @Override
-    public void init(){
-        // Live camera preview
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        // Gets the webcam through hardwareMap
-        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam"), cameraMonitorViewId);
-        // Attaches the pipeline to the webcam
-        webcam.setPipeline(new Pipeline());
+    public void runOpMode() {
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
 
-        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
-            @Override
-            public void onOpened() {
-                webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
-            }
+        //init webcam classes
+        webcam = new WebcamCore(hardwareMap);
+        cameraServo = new CameraServoCore(hardwareMap);
+        //init auto classes
+        sleeveDetector = new SleeveDetector();
 
-            @Override
-            public void onError(int errorCode) {
+        waitForStart();
 
-            }
-        });
+        runtime.reset();
+        cameraServo.resetCameraServo();
+
+        // Loop until end of autonomous
+        while(opModeIsActive()) {
+            sleeveDetector.updateSleevePos(webcam.pipeline.getHsvFilterPink(),
+                    webcam.pipeline.getHsvFilterGreen(),
+                    webcam.pipeline.getHsvFilterOrange());
+            addTelemetry(telemetry);
+        }
     }
 
-    @Override
-    public void start() {
-        webcam.stopStreaming(); // saves processor power
+    private void addTelemetry(Telemetry telemetry) {
+        telemetry.addData("FTC Team #", "22531");
+        telemetry.addData("Elapsed time", "%4.2f", runtime.time());
+        sleeveDetector.telemetry(telemetry);
+        telemetry.update();
     }
-
-
-    public void loop(){
-
-    }
-
 }
