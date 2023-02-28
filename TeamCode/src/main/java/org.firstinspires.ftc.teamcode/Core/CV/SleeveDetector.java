@@ -45,9 +45,9 @@ public class SleeveDetector {
         int lenCols = mask.cols();
 
         // Loop through each row (large increment to optimize)
-        for (int crntRow=0; crntRow<lenRows; crntRow+=40) {
+        for (int crntRow=0; crntRow<lenRows; crntRow+=5) {
             // Loop through each column (large increment to optimize)
-            for (int crntCol=0; crntCol<lenCols; crntCol+=40) {
+            for (int crntCol=0; crntCol<lenCols; crntCol+=5) {
                 double[] pixelValue = mask.get(crntRow, crntCol);
                 // Mask hasn't been processed yet
                 if (pixelValue == null) {
