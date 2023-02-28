@@ -8,6 +8,8 @@ import org.firstinspires.ftc.teamcode.Core.*;
 import org.firstinspires.ftc.teamcode.Core.CV.SleeveDetector;
 import org.firstinspires.ftc.teamcode.Core.CV.WebcamCore;
 
+import java.util.concurrent.TimeUnit;
+
 /*** Constantly updates the camera, returning the sleeve that it detects. */
 @Autonomous(name="Camera Test", group = "Auto")
 public class CameraTest extends LinearOpMode {
@@ -35,10 +37,13 @@ public class CameraTest extends LinearOpMode {
 
         // Loop until end of autonomous
         while(opModeIsActive()) {
-            sleeveDetector.updateSleevePos(webcam.pipeline.getHsvFilterPink(),
-                    webcam.pipeline.getHsvFilterGreen(),
-                    webcam.pipeline.getHsvFilterOrange());
-            addTelemetry(telemetry);
+            // Runs every second
+            if (runtime.time(TimeUnit.MILLISECONDS) % 1000 == 0) {
+                sleeveDetector.updateSleevePos(webcam.pipeline.getHsvFilterPink(),
+                        webcam.pipeline.getHsvFilterGreen(),
+                        webcam.pipeline.getHsvFilterOrange());
+                addTelemetry(telemetry);
+            }
         }
     }
 
