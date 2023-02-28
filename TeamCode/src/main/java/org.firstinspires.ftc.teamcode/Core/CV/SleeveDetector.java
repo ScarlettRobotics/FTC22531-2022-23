@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode.Core.CV;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.*;
 
-import java.util.Arrays;
-
 /** Class that detects what position the sleeve is on */
 public class SleeveDetector {
     private double[] sumPixelsPink, sumPixelsGreen, sumPixelsOrange;
@@ -35,48 +33,38 @@ public class SleeveDetector {
         }
     }
 
-    /** Adds the RGB values of each pixel, then outputs the result
+    /** Adds the RGB values of each pixel value, then outputs the result
      * TODO BROKEN :((( */
     private double[] sumPixels(Mat mask) {
-        double[] out = {0, 0, 0};
+        // Final output
+        double[] out = {0};
 
-        mask.convertTo(mask, CvType.CV_64FC3); //New line added.
-        int size = (int) (mask.total() * mask.channels());
-        double[] pixelValue = new double[size]; // use double[] instead of byte[]
+        // Stores how many rows and cols are in the mask,
+        // so the data doesn't have to be retrieved every instance (optimization)
+        int lenRows = mask.rows();
+        int lenCols = mask.cols();
 
-        // Loop through each row
-        for (int crntRow=0; crntRow<mask.rows(); crntRow++) {
-            // Loop through each column
-            for (int crntCol=0; crntCol<mask.cols(); crntCol++) {
-                mask.get(crntRow, crntCol, pixelValue);
+        // Loop through each row (large increment to optimize)
+        for (int crntRow=0; crntRow<lenRows; crntRow+=40) {
+            // Loop through each column (large increment to optimize)
+            for (int crntCol=0; crntCol<lenCols; crntCol+=40) {
+                double[] pixelValue = mask.get(crntRow, crntCol);
+                // Mask hasn't been processed yet
+                if (pixelValue == null) {
+                    return out;
+                }
+
                 out[0] += pixelValue[0];
-                out[1] += pixelValue[1];
-                out[2] += pixelValue[2];
             }
         }
-        /* START prev code
-        // Loop through each row
-        for (int i=0; i<mask.rows(); i++) {
-            // Loop through each column
-            for (int j=0; j<mask.cols(); j++) {
-                out[0] += pixelValue[0];
-                out[1] += pixelValue[1];
-                out[2] += pixelValue[2];
-            }
-        }
-        END prev code */
         return out;
     }
 
     public void telemetry(Telemetry telemetry) {
         telemetry.addData("\nCurrent class", "SleeveDetector.java");
-        telemetry.addData("sumPixelsPink", "%4.2f %4.2f %4.2f",
-                sumPixelsPink[0], sumPixelsPink[1], sumPixelsPink[2]);
-                //sumPixelsPink[2] was originally sumPixelsOrange
-        telemetry.addData("sumPixelsGreen", "%4.2f %4.2f %4.2f",
-                sumPixelsGreen[0], sumPixelsGreen[1], sumPixelsGreen[2]);
-        telemetry.addData("sumPixelsOrange", "%4.2f %4.2f %4.2f",
-                sumPixelsOrange[0], sumPixelsOrange[1], sumPixelsOrange[2]);
+        telemetry.addData("sumPixelsPink", "%4.2f", sumPixelsPink[0]);
+        telemetry.addData("sumPixelsGreen", "%4.2f", sumPixelsGreen[0]);
+        telemetry.addData("sumPixelsOrange", "%4.2f", sumPixelsOrange[0]);
 
         telemetry.addData("sleevePos", sleevePos);
     }
