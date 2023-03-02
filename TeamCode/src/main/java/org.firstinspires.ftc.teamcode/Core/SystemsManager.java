@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Core;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 public abstract class SystemsManager extends OpMode {
     // Initialize claw and slide classes
@@ -12,7 +13,10 @@ public abstract class SystemsManager extends OpMode {
     protected boolean pRightBumper;
 
     protected CameraServoCore cameraServo;
+    
 
+    protected int turnQueueLeft = 0;
+    protected int turnQueueRight = 0;
     @Override
     public void init() {
         // Define classes
@@ -64,6 +68,7 @@ public abstract class SystemsManager extends OpMode {
         claw.telemetry(telemetry);
     }
 
+
     protected void updateMotor(final int controllerNum) {
         double left, right, center;
 
@@ -75,12 +80,44 @@ public abstract class SystemsManager extends OpMode {
                 right = gamepad1.right_stick_y;
                 center = gamepad1.right_trigger - gamepad1.left_trigger;
                 // Snap turn
-                if (!pLeftBumper && gamepad1.left_bumper) {
-                    drive.moveInches(-11, 11, 0);
-                }
-                if (!pRightBumper && gamepad1.right_bumper) {
-                    drive.moveInches(11, -11, 0);
-                }
+
+
+
+
+                    if (!pLeftBumper && gamepad1.left_bumper) {
+                        turnQueueLeft++;
+                        if (turnQueueLeft > 0) {
+                            if (drive.getLeftMotorTargetPosition() == drive.getLeftMotorCurrentPosition()) {
+                                turnQueueLeft--;
+                                drive.moveInches(-11, 11, 0);
+
+                            } else {
+                                return;
+                            }
+
+
+
+                        }
+                    }
+
+                    if (!pRightBumper && gamepad1.right_bumper) {
+                        turnQueueRight++;
+                        if (turnQueueRight > 0) {
+                            if (drive.getRightMotorTargetPosition() == drive.getRightMotorCurrentPosition()) {
+                                turnQueueRight--;
+                                drive.moveInches(11, -11, 0);
+                            } else {
+                                return;
+                            }
+
+
+
+                        }
+
+                    }
+
+
+
                 pLeftBumper = gamepad1.left_bumper;
                 pRightBumper = gamepad1.right_bumper;
                 break;
@@ -102,3 +139,4 @@ public abstract class SystemsManager extends OpMode {
         drive.telemetry(telemetry);
     }
 }
+

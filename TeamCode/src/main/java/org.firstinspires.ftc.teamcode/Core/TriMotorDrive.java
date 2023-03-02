@@ -87,6 +87,21 @@ public class TriMotorDrive {
         rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         centerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
+    public int getLeftMotorTargetPosition() {
+       return  leftMotor.getTargetPosition();
+    }
+
+    public int getRightMotorTargetPosition() {
+        return  rightMotor.getTargetPosition();
+    }
+
+    public int getLeftMotorCurrentPosition() {
+        return  leftMotor.getTargetPosition();
+    }
+
+    public int getRightMotorCurrentPosition() {
+        return  rightMotor.getTargetPosition();
+    }
 
     /** If the motors are in RUN_TO_POSITION, motors progress to their target position */
     public void update() {
