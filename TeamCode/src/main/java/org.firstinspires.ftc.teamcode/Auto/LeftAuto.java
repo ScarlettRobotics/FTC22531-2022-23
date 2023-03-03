@@ -60,7 +60,7 @@ public class LeftAuto extends LinearOpMode {
             // Move forward 2 tiles, and move slide up
             if (autoEventHandler.actionOccurred(2, runtime.time())) {
                 drive.moveInches(48, 48, 0);
-                slide.slideManual(0.8);
+                //slide.slideManual(0.8);
             }
 
             // Centre with pole
@@ -75,13 +75,13 @@ public class LeftAuto extends LinearOpMode {
 
             // Slightly move slide down
             if (autoEventHandler.actionOccurred(5, runtime.time())) {
-                slide.slideManual(-0.6);
+                //slide.slideManual(-0.6);
             }
 
             // Drop cone on slide
             if (autoEventHandler.actionOccurred(6, runtime.time())) {
-                claw.open();
-                drive.moveInches(-7, -7, 0);
+                //claw.open();
+                //drive.moveInches(-7, -7, 0);
             }
 
             // Park to correct position
@@ -99,15 +99,15 @@ public class LeftAuto extends LinearOpMode {
             }
 
             if (autoEventHandler.actionOccurred(8, runtime.time())) {
-                slide.slideManual(0);
+                //slide.slideManual(0);
             }
 
             // Clap while waiting
             if (runtime.time() >= 13500) {
                 if ((int)(runtime.time() / 400) % 2 == 1) {
-                    claw.open();
+                    //claw.open();
                 } else {
-                    claw.close();
+                    //claw.close();
                 }
             }
 
