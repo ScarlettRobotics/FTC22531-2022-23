@@ -33,8 +33,7 @@ public class SleeveDetector {
         }
     }
 
-    /** Adds the RGB values of each pixel value, then outputs the result
-     * TODO BROKEN :((( */
+    /** Adds the RGB values of each pixel value, then outputs the result */
     private double[] sumPixels(Mat mask) {
         // Final output
         double[] out = {0};
