@@ -89,9 +89,9 @@ public class Pipeline extends OpenCvPipeline {
         double[] pixelValue;
         int crntRow = 0, crntCol = 0;
         // Loop through each row (large increment to optimize)
-        for (crntRow=0; crntRow<lenRows; crntRow+=5) {
+        for (crntRow=0; crntRow<lenRows; crntRow++) {
             // Loop through each column (large increment to optimize)
-            for (crntCol=0; crntCol<lenCols; crntCol+=5) {
+            for (crntCol=0; crntCol<lenCols; crntCol++) {
                 pixelValue = mask.get(crntRow, crntCol);
                 // Mask hasn't been processed yet
                 if (pixelValue == null) {
