@@ -39,17 +39,19 @@ public class StandardAuto extends LinearOpMode {
         // run until the end of match (driver pressed STOP)
         while(opModeIsActive()) {
             if (autoEventHandler.actionOccurred(0, runtime.time())) {
-                sleeveDetector.updateSleevePos(webcam.pipeline.getHsvFilterPink(), webcam.pipeline.getHsvFilterGreen(), webcam.pipeline.getHsvFilterOrange());
+                sleeveDetector.updateSleevePos(webcam.pipeline.getHsvFilterPink(),
+                        webcam.pipeline.getHsvFilterGreen(),
+                        webcam.pipeline.getHsvFilterOrange());
             }
 
             // Align with correct position
             if (autoEventHandler.actionOccurred(1, runtime.time())) {
                 switch (sleeveDetector.getSleevePos()) {
                     case 1:
-                        drive.moveInches(0, 0, -35);
+                        drive.moveInches(0, 0, -40);
                         break;
                     case 3:
-                        drive.moveInches(0, 0, 35);
+                        drive.moveInches(0, 0, 40);
                         break;
                 }
             }
