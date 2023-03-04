@@ -5,7 +5,7 @@ import org.opencv.core.*;
 
 /** Class that detects what position the sleeve is on */
 public class SleeveDetector {
-    private double[] sumPixelsPink, sumPixelsGreen, sumPixelsOrange;
+    private double[] sumPixelsPink = {0}, sumPixelsGreen = {0}, sumPixelsOrange = {0};
     private int sleevePos;
 
     public int getSleevePos() {
