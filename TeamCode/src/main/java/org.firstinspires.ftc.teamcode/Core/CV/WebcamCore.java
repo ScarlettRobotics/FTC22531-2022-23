@@ -29,7 +29,7 @@ public class WebcamCore {
             public void onOpened ()
             {
                 // Usually this is where you'll want to start streaming from the camera (see section 4)
-                webcam.startStreaming(352, 288);
+                webcam.startStreaming(160, 120);
             }
             @Override
             public void onError ( int errorCode)
