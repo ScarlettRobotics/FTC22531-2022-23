@@ -5,17 +5,13 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Core.*;
-import org.firstinspires.ftc.teamcode.Core.CV.SleeveDetector;
 import org.firstinspires.ftc.teamcode.Core.CV.WebcamCore;
-
-import java.util.concurrent.TimeUnit;
 
 /*** Constantly updates the camera, returning the sleeve that it detects. */
 @Autonomous(name="Camera Test", group = "Auto")
 public class CameraTest extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
-    protected SleeveDetector sleeveDetector;
     protected WebcamCore webcam;
     protected CameraServoCore cameraServo;
 
@@ -27,8 +23,6 @@ public class CameraTest extends LinearOpMode {
         //init webcam classes
         webcam = new WebcamCore(hardwareMap);
         cameraServo = new CameraServoCore(hardwareMap);
-        //init auto classes
-        sleeveDetector = new SleeveDetector();
 
         waitForStart();
 
@@ -37,20 +31,14 @@ public class CameraTest extends LinearOpMode {
 
         // Loop until end of autonomous
         while(opModeIsActive()) {
-            // Runs every second
-            if (runtime.time(TimeUnit.MILLISECONDS) % 1000 == 0) {
-                sleeveDetector.updateSleevePos(webcam.pipeline.getHsvFilterPink(),
-                        webcam.pipeline.getHsvFilterGreen(),
-                        webcam.pipeline.getHsvFilterOrange());
-                addTelemetry(telemetry);
-            }
+            addTelemetry(telemetry);
         }
     }
 
     private void addTelemetry(Telemetry telemetry) {
         telemetry.addData("FTC Team #", "22531");
         telemetry.addData("Elapsed time", "%4.2f", runtime.time());
-        sleeveDetector.telemetry(telemetry);
+        webcam.pipeline.addTelemetry(telemetry);
         telemetry.update();
     }
 }

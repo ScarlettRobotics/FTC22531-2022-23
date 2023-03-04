@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Core.CV;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.*;
 import org.opencv.imgproc.*;
 import org.openftc.easyopencv.OpenCvPipeline;
@@ -19,6 +20,9 @@ public class Pipeline extends OpenCvPipeline {
     private Mat hsvFilterPink = new Mat();
     private Mat hsvFilterGreen = new Mat();
     private Mat hsvFilterOrange = new Mat();
+
+    private int sumPixelsPink = 0, sumPixelsGreen = 0, sumPixelsOrange = 0;
+    private int sleevePos;
 
     /**
      * This is the primary method that runs the entire pipeline and updates the outputs.
@@ -50,7 +54,56 @@ public class Pipeline extends OpenCvPipeline {
         double[] hsvThreshold2Value = {158.0, 255.0};
         hsvThreshold(hsvThreshold2Input, hsvThreshold2Hue, hsvThreshold2Saturation, hsvThreshold2Value, hsvFilterOrange);
 
+        sumPixelsPink = 0;
+        sumPixelsGreen = 0;
+        sumPixelsOrange = 0;
+        // Sum of white pixels of respective Mat
+        sumPixelsPink = sumPixels(hsvFilterPink);
+        sumPixelsGreen = sumPixels(hsvFilterGreen);
+        sumPixelsOrange = sumPixels(hsvFilterOrange);
+
+        if (sumPixelsPink > sumPixelsGreen &&
+                sumPixelsPink > sumPixelsOrange) {
+            sleevePos = 1;
+        } else if (sumPixelsGreen > sumPixelsOrange &&
+                sumPixelsGreen > sumPixelsPink) {
+            sleevePos = 2;
+        } else if (sumPixelsOrange > sumPixelsGreen &&
+                sumPixelsOrange > sumPixelsPink) {
+            sleevePos = 3;
+        } else {
+            // error
+            sleevePos = 0;
+        }
         return webcamOutput;
+    }
+
+    /** Adds the RGB values of each pixel value, then outputs the result */
+    private int sumPixels(Mat mask) {
+        // Final output
+        int out = 0;
+
+        // Stores how many rows and cols are in the mask,
+        // so the data doesn't have to be retrieved every instance (optimization)
+        int lenRows = mask.rows();
+        int lenCols = mask.cols();
+
+        double[] pixelValue;
+        int crntRow = 0, crntCol = 0;
+        // Loop through each row (large increment to optimize)
+        for (crntRow=0; crntRow<lenRows; crntRow+=5) {
+            // Loop through each column (large increment to optimize)
+            for (crntCol=0; crntCol<lenCols; crntCol+=5) {
+                pixelValue = mask.get(crntRow, crntCol);
+                // Mask hasn't been processed yet
+                if (pixelValue == null) {
+                    continue;
+                }
+
+                out += pixelValue[0];
+            }
+        }
+        return out;
     }
 
     /**
@@ -85,6 +138,17 @@ public class Pipeline extends OpenCvPipeline {
         return hsvFilterOrange;
     }
 
+    public int getSleevePos() {
+        return sleevePos;
+    }
+
+    public void addTelemetry(Telemetry telemetry) {
+        telemetry.addData("\nCurrent class", "Pipeline.java");
+        telemetry.addData("sumPixelsPink", sumPixelsPink);
+        telemetry.addData("sumPixelsGreen", sumPixelsGreen);
+        telemetry.addData("sumPixelsOrange", sumPixelsOrange);
+        telemetry.addData("sleevePos", sleevePos);
+    }
 
     /**
      * Code used for CV_flip.

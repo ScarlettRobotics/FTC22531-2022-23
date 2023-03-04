@@ -29,7 +29,6 @@ public class LeftAuto extends LinearOpMode {
     protected CameraServoCore cameraServo;
 
     protected AutoEventHandler autoEventHandler;
-    protected SleeveDetector sleeveDetector;
 
     @Override
     public void runOpMode() {
@@ -39,9 +38,6 @@ public class LeftAuto extends LinearOpMode {
 
         runtime.reset();
         cameraServo.resetCameraServo();
-
-        // TODO find a way to process frames
-        sleeveDetector.updateSleevePos(webcam.pipeline.getHsvFilterPink(), webcam.pipeline.getHsvFilterGreen(), webcam.pipeline.getHsvFilterOrange());
 
         // TODO rightMotor moves before leftMotor; they should move at the same time
         // strafe right to center on tile
@@ -86,7 +82,7 @@ public class LeftAuto extends LinearOpMode {
 
             // Park to correct position
             if (autoEventHandler.actionOccurred(7, runtime.time())) {
-                switch (sleeveDetector.getSleevePos()) {
+                switch (webcam.pipeline.getSleevePos()) {
                     case 1:
                         drive.moveInches(0, 0, -33);
                         break;
@@ -130,7 +126,6 @@ public class LeftAuto extends LinearOpMode {
         cameraServo = new CameraServoCore(hardwareMap);
         //init auto classes
         autoEventHandler = new AutoEventHandler();
-        sleeveDetector = new SleeveDetector();
 
         // Add times where the robot takes actions
         autoEventHandler.addDetectionTime(0);
@@ -148,7 +143,7 @@ public class LeftAuto extends LinearOpMode {
         telemetry.addData("FTC Team #", "22531");
         telemetry.addData("Elapsed time", "%4.2f", runtime.time());
         drive.telemetry(telemetry);
-        sleeveDetector.telemetry(telemetry);
+        webcam.pipeline.addTelemetry(telemetry);
         autoEventHandler.telemetry(telemetry);
         telemetry.update();
     }
