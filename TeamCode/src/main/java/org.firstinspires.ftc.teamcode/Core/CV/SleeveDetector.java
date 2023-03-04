@@ -5,7 +5,7 @@ import org.opencv.core.*;
 
 /** Class that detects what position the sleeve is on */
 public class SleeveDetector {
-    private double[] sumPixelsPink = {0}, sumPixelsGreen = {0}, sumPixelsOrange = {0};
+    private int sumPixelsPink = 0, sumPixelsGreen = 0, sumPixelsOrange = 0;
     private int sleevePos;
 
     public int getSleevePos() {
@@ -18,14 +18,14 @@ public class SleeveDetector {
         sumPixelsGreen = sumPixels(hsvFilterGreen);
         sumPixelsOrange = sumPixels(hsvFilterOrange);
 
-        if (sumPixelsPink[0] > sumPixelsGreen[0] &&
-                sumPixelsPink[0] > sumPixelsOrange[0]) {
+        if (sumPixelsPink > sumPixelsGreen &&
+                sumPixelsPink > sumPixelsOrange) {
             sleevePos = 1;
-        } else if (sumPixelsGreen[0] > sumPixelsOrange[0] &&
-                sumPixelsGreen[0] > sumPixelsPink[0]) {
+        } else if (sumPixelsGreen > sumPixelsOrange &&
+                sumPixelsGreen > sumPixelsPink) {
             sleevePos = 2;
-        } else if (sumPixelsOrange[0] > sumPixelsGreen[0] &&
-                sumPixelsOrange[0] > sumPixelsPink[0]) {
+        } else if (sumPixelsOrange > sumPixelsGreen &&
+                sumPixelsOrange > sumPixelsPink) {
             sleevePos = 3;
         } else {
             // error
@@ -34,9 +34,9 @@ public class SleeveDetector {
     }
 
     /** Adds the RGB values of each pixel value, then outputs the result */
-    private double[] sumPixels(Mat mask) {
+    private int sumPixels(Mat mask) {
         // Final output
-        double[] out = {0};
+        int out = 0;
 
         // Stores how many rows and cols are in the mask,
         // so the data doesn't have to be retrieved every instance (optimization)
@@ -53,7 +53,7 @@ public class SleeveDetector {
                     return out;
                 }
 
-                out[0] += pixelValue[0];
+                out += pixelValue[0];
             }
         }
         return out;
@@ -61,9 +61,9 @@ public class SleeveDetector {
 
     public void telemetry(Telemetry telemetry) {
         telemetry.addData("\nCurrent class", "SleeveDetector.java");
-        telemetry.addData("sumPixelsPink", "%4.2f", sumPixelsPink[0]);
-        telemetry.addData("sumPixelsGreen", "%4.2f", sumPixelsGreen[0]);
-        telemetry.addData("sumPixelsOrange", "%4.2f", sumPixelsOrange[0]);
+        telemetry.addData("sumPixelsPink", "%4.2f", sumPixelsPink);
+        telemetry.addData("sumPixelsGreen", "%4.2f", sumPixelsGreen);
+        telemetry.addData("sumPixelsOrange", "%4.2f", sumPixelsOrange);
 
         telemetry.addData("sleevePos", sleevePos);
     }
