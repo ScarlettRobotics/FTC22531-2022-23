@@ -20,10 +20,6 @@ public class Pipeline extends OpenCvPipeline {
     private Mat hsvFilterGreen = new Mat();
     private Mat hsvFilterOrange = new Mat();
 
-    static {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-    }
-
     /**
      * This is the primary method that runs the entire pipeline and updates the outputs.
      */
@@ -35,23 +31,23 @@ public class Pipeline extends OpenCvPipeline {
 
         // Step HSV_Threshold0:
         Mat hsvThreshold0Input = webcamOutput;
-        double[] hsvThreshold0Hue = {140.0, 180.0};
-        double[] hsvThreshold0Saturation = {60.0, 255.0};
-        double[] hsvThreshold0Value = {148.98381294964028, 255.0};
+        double[] hsvThreshold0Hue = {121.0, 169.0};
+        double[] hsvThreshold0Saturation = {94.0, 190.0};
+        double[] hsvThreshold0Value = {41.0, 255.0};
         hsvThreshold(hsvThreshold0Input, hsvThreshold0Hue, hsvThreshold0Saturation, hsvThreshold0Value, hsvFilterPink);
 
         // Step HSV_Threshold1:
         Mat hsvThreshold1Input = webcamOutput;
-        double[] hsvThreshold1Hue = {30.0, 100.0};
-        double[] hsvThreshold1Saturation = {50.0, 255.0};
-        double[] hsvThreshold1Value = {94.01978417266187, 255.0};
+        double[] hsvThreshold1Hue = {53.0, 100.0};
+        double[] hsvThreshold1Saturation = {66.0, 255.0};
+        double[] hsvThreshold1Value = {94.0, 255.0};
         hsvThreshold(hsvThreshold1Input, hsvThreshold1Hue, hsvThreshold1Saturation, hsvThreshold1Value, hsvFilterGreen);
 
         // Step HSV_Threshold2:
         Mat hsvThreshold2Input = webcamOutput;
-        double[] hsvThreshold2Hue = {10.0, 50.0};
-        double[] hsvThreshold2Saturation = {128.41726618705036, 255.0};
-        double[] hsvThreshold2Value = {121.53776978417265, 255.0};
+        double[] hsvThreshold2Hue = {0.0, 22.0};
+        double[] hsvThreshold2Saturation = {163.0, 255.0};
+        double[] hsvThreshold2Value = {158.0, 255.0};
         hsvThreshold(hsvThreshold2Input, hsvThreshold2Hue, hsvThreshold2Saturation, hsvThreshold2Value, hsvFilterOrange);
 
         return webcamOutput;
