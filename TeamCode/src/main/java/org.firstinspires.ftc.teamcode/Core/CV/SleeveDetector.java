@@ -13,6 +13,9 @@ public class SleeveDetector {
     }
 
     public void updateSleevePos(Mat hsvFilterPink, Mat hsvFilterGreen, Mat hsvFilterOrange) {
+        sumPixelsPink = 0;
+        sumPixelsGreen = 0;
+        sumPixelsOrange = 0;
         // Sum of white pixels of respective Mat
         sumPixelsPink = sumPixels(hsvFilterPink);
         sumPixelsGreen = sumPixels(hsvFilterGreen);
@@ -43,11 +46,13 @@ public class SleeveDetector {
         int lenRows = mask.rows();
         int lenCols = mask.cols();
 
+        double[] pixelValue;
+        int crntRow = 0, crntCol = 0;
         // Loop through each row (large increment to optimize)
-        for (int crntRow=0; crntRow<lenRows; crntRow+=5) {
+        for (crntRow=0; crntRow<lenRows; crntRow+=5) {
             // Loop through each column (large increment to optimize)
-            for (int crntCol=0; crntCol<lenCols; crntCol+=5) {
-                double[] pixelValue = mask.get(crntRow, crntCol);
+            for (crntCol=0; crntCol<lenCols; crntCol+=5) {
+                pixelValue = mask.get(crntRow, crntCol);
                 // Mask hasn't been processed yet
                 if (pixelValue == null) {
                     return out;
@@ -61,9 +66,9 @@ public class SleeveDetector {
 
     public void telemetry(Telemetry telemetry) {
         telemetry.addData("\nCurrent class", "SleeveDetector.java");
-        telemetry.addData("sumPixelsPink", "%4.2f", sumPixelsPink);
-        telemetry.addData("sumPixelsGreen", "%4.2f", sumPixelsGreen);
-        telemetry.addData("sumPixelsOrange", "%4.2f", sumPixelsOrange);
+        telemetry.addData("sumPixelsPink", sumPixelsPink);
+        telemetry.addData("sumPixelsGreen", sumPixelsGreen);
+        telemetry.addData("sumPixelsOrange", sumPixelsOrange);
 
         telemetry.addData("sleevePos", sleevePos);
     }
