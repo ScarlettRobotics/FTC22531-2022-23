@@ -13,7 +13,7 @@ public class TriMotorDrive {
     private DcMotor rightMotor;
     private DcMotor centerMotor;
     //// CONSTANT VARIABLES
-    private final int ENCODER_VALUES_PER_ROTATION = 1400;
+    private final int ENCODER_VALUES_PER_ROTATION = 700;
     // TODO ADJUST VALUE
     private final double INCHES_PER_ROTATION = 12.36;
 
@@ -79,8 +79,8 @@ public class TriMotorDrive {
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         centerMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftMotor.setTargetPosition(inchesToEncoderValues(leftInches));
-        rightMotor.setTargetPosition(inchesToEncoderValues(rightInches));
+        leftMotor.setTargetPosition(-inchesToEncoderValues(leftInches));
+        rightMotor.setTargetPosition(-inchesToEncoderValues(rightInches));
         centerMotor.setTargetPosition(inchesToEncoderValues(centerInches));
 
         leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
