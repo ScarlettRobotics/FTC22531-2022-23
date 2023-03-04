@@ -54,9 +54,7 @@ public class Pipeline extends OpenCvPipeline {
         double[] hsvThreshold2Value = {158.0, 255.0};
         hsvThreshold(hsvThreshold2Input, hsvThreshold2Hue, hsvThreshold2Saturation, hsvThreshold2Value, hsvFilterOrange);
 
-        sumPixelsPink = 0;
-        sumPixelsGreen = 0;
-        sumPixelsOrange = 0;
+        /* Detects the sleeve based on inputs*/
         // Sum of white pixels of respective Mat
         sumPixelsPink = sumPixels(hsvFilterPink);
         sumPixelsGreen = sumPixels(hsvFilterGreen);
@@ -78,7 +76,7 @@ public class Pipeline extends OpenCvPipeline {
         return webcamOutput;
     }
 
-    /** Adds the RGB values of each pixel value, then outputs the result */
+    /** Adds the RGB values of each pixel value of a black and white image, then outputs the result */
     private int sumPixels(Mat mask) {
         // Final output
         int out = 0;
@@ -100,7 +98,9 @@ public class Pipeline extends OpenCvPipeline {
                     continue;
                 }
 
-                out += pixelValue[0];
+                if (pixelValue[0] != 0) {
+                    out++;
+                }
             }
         }
         return out;
