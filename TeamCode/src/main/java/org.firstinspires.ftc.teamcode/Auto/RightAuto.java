@@ -136,6 +136,7 @@ public class RightAuto extends LinearOpMode {
     private void addTelemetry(Telemetry telemetry) {
         telemetry.addData("FTC Team #", "22531");
         telemetry.addData("Elapsed time", "%4.2f", runtime.time());
+        sleeveDetector.telemetry(telemetry);
         drive.telemetry(telemetry);
         sleeveDetector.telemetry(telemetry);
         autoEventHandler.telemetry(telemetry);
