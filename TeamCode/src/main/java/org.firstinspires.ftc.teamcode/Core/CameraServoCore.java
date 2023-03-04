@@ -19,14 +19,6 @@ public class CameraServoCore {
         cameraServo.setPosition(pos);
     }
 
-    public void cameraUp(){
-
-    }
-
-    public void cameraDown(){
-
-    }
-
     public void telemetry(Telemetry telemetry){
         telemetry.addData("\nCurrent class:", "CameraServoCore.java");
         telemetry.addData("Camera servo pos:",
