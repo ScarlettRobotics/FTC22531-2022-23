@@ -33,29 +33,30 @@ public class StandardAuto extends LinearOpMode {
         runtime.reset();
         cameraServo.resetCameraServo();
 
-        // TODO find a way to process frames
-        sleeveDetector.updateSleevePos(webcam.pipeline.getHsvFilterPink(), webcam.pipeline.getHsvFilterGreen(), webcam.pipeline.getHsvFilterOrange());
-
         // TODO rightMotor moves before leftMotor; they should move at the same time
         // strafe right to center on tile
 
         // run until the end of match (driver pressed STOP)
         while(opModeIsActive()) {
-            // Align with correct position
             if (autoEventHandler.actionOccurred(0, runtime.time())) {
+                sleeveDetector.updateSleevePos(webcam.pipeline.getHsvFilterPink(), webcam.pipeline.getHsvFilterGreen(), webcam.pipeline.getHsvFilterOrange());
+            }
+
+            // Align with correct position
+            if (autoEventHandler.actionOccurred(1, runtime.time())) {
                 switch (sleeveDetector.getSleevePos()) {
                     case 1:
-                        drive.moveInches(0, 0, -28);
+                        drive.moveInches(0, 0, -35);
                         break;
                     case 3:
-                        drive.moveInches(0, 0, 28);
+                        drive.moveInches(0, 0, 35);
                         break;
                 }
             }
 
             // Move forward 2 tiles
-            if (autoEventHandler.actionOccurred(1, runtime.time())) {
-                drive.moveInches(48, 48, 0);
+            if (autoEventHandler.actionOccurred(2, runtime.time())) {
+                drive.moveInches(30, 30, 0);
             }
 
             drive.update();
@@ -80,8 +81,9 @@ public class StandardAuto extends LinearOpMode {
         sleeveDetector = new SleeveDetector();
 
         // Add times where the robot takes actions
-        autoEventHandler.addDetectionTime(0);
-        autoEventHandler.addDetectionTime(1000);
+        autoEventHandler.addDetectionTime(2000);
+        autoEventHandler.addDetectionTime(3000);
+        autoEventHandler.addDetectionTime(4000);
     }
 
     private void addTelemetry(Telemetry telemetry) {
