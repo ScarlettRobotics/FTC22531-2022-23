@@ -37,20 +37,18 @@ public class StandardAuto extends LinearOpMode {
 
         // run until the end of match (driver pressed STOP)
         while(opModeIsActive()) {
-            /*if (autoEventHandler.actionOccurred(0, runtime.time())) {
-                sleeveDetector.updateSleevePos(webcam.pipeline.getHsvFilterPink(),
-                        webcam.pipeline.getHsvFilterGreen(),
-                        webcam.pipeline.getHsvFilterOrange());
-            }*/
+            if (autoEventHandler.actionOccurred(0, runtime.time())) {
+                claw.close();
+            }
 
             // Align with correct position
             if (autoEventHandler.actionOccurred(1, runtime.time())) {
                 switch (webcam.pipeline.getSleevePos()) {
                     case 1:
-                        drive.moveInches(0, 0, -40);
+                        drive.moveInches(0, 0, -45);
                         break;
                     case 3:
-                        drive.moveInches(0, 0, 40);
+                        drive.moveInches(0, 0, 45);
                         break;
                 }
             }
@@ -82,7 +80,7 @@ public class StandardAuto extends LinearOpMode {
 
         // Add times where the robot takes actions
         autoEventHandler.addDetectionTime(2000);
-        autoEventHandler.addDetectionTime(3000);
+        autoEventHandler.addDetectionTime(2500);
         autoEventHandler.addDetectionTime(4000);
     }
 
@@ -90,7 +88,8 @@ public class StandardAuto extends LinearOpMode {
         telemetry.addData("FTC Team #", "22531");
         telemetry.addData("Elapsed time", "%4.2f", runtime.time());
         drive.telemetry(telemetry);
-        webcam.pipeline.addTelemetry(telemetry);
+        claw.telemetry(telemetry);
+        webcam.pipeline.telemetry(telemetry);
         autoEventHandler.telemetry(telemetry);
         telemetry.update();
     }
