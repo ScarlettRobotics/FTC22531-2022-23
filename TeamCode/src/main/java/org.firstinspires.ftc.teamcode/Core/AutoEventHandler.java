@@ -13,6 +13,9 @@ import java.util.ArrayList;
  * This class should be managed in these steps:
  *  1. Run addDetectionTime() to save a time to check if code has ran.
  *  2. In the opModeIsActive() loop, TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO*/
+
+
+
 public class AutoEventHandler {
     private IntList timesToCheck;
     private ArrayList<Boolean> previouslyRan;
@@ -22,13 +25,21 @@ public class AutoEventHandler {
         previouslyRan = new ArrayList<Boolean>();
     }
 
-    /** TODO */
+    /**
+     * Add a time to check if code has ran
+     * @param millis the time in milliseconds to check
+     */
     public void addDetectionTime(int millis) {
         timesToCheck.add(millis);
         previouslyRan.add(false);
     }
 
-    /** TODO */
+    /**
+     * Check if desired time as passed
+     * @param index the index of he time to check
+     * @param timeMillis the time elapsed in milliseconds
+     * @return True if the desired time has passed and not previously detected
+     * otherwise return false*/
     public boolean actionOccurred(int index, double timeMillis) {
         if (previouslyRan.get(index)) {
             return false;

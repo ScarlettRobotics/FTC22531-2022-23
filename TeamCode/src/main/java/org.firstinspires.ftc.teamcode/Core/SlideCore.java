@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Core;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -17,6 +18,7 @@ public class SlideCore {
     // Map DC motor variable to driver hub
     public SlideCore (HardwareMap hardwareMap) {
         slideMotor = hardwareMap.get(DcMotor.class, "slide_motor");
+        slideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void slideUp(){

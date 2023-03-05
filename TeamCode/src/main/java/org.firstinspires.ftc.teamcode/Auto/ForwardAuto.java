@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Core.AutoEventHandler;
+import org.firstinspires.ftc.teamcode.Core.CV.WebcamCore;
 import org.firstinspires.ftc.teamcode.Core.ClawCore;
 import org.firstinspires.ftc.teamcode.Core.TriMotorDrive;
 import org.firstinspires.ftc.teamcode.Core.SlideCore;
@@ -28,6 +29,7 @@ public class ForwardAuto extends LinearOpMode {
     protected TriMotorDrive drive;
     protected ClawCore claw;
     protected SlideCore slide;
+    protected WebcamCore webcam;
 
     @Override
     public void runOpMode() {
@@ -63,6 +65,7 @@ public class ForwardAuto extends LinearOpMode {
         claw = new ClawCore(hardwareMap);
         slide = new SlideCore(hardwareMap);
 
+        webcam = new WebcamCore(hardwareMap);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -76,6 +79,7 @@ public class ForwardAuto extends LinearOpMode {
         telemetry.addData("FTC Team #", "20718");
         telemetry.addData("Elapsed time", "%4.2f", runtime.time());
         drive.telemetry(telemetry);
+        webcam.pipeline.addTelemetry(telemetry);
         autoEventHandler.telemetry(telemetry);
         telemetry.update();
     }

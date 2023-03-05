@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Core;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 public abstract class SystemsManager extends OpMode {
     // Initialize claw and slide classes
@@ -11,14 +12,18 @@ public abstract class SystemsManager extends OpMode {
     protected boolean pLeftBumper;
     protected boolean pRightBumper;
 
+    protected CameraServoCore cameraServo;
+    
 
+    protected int turnQueueLeft = 0;
+    protected int turnQueueRight = 0;
     @Override
     public void init() {
         // Define classes
         drive = new TriMotorDrive(hardwareMap);
         claw = new ClawCore(hardwareMap);
         slide = new SlideCore(hardwareMap);
-        //cameraServo = new CameraServoCore(hardwareMap);
+        cameraServo = new CameraServoCore(hardwareMap);
         // Telemetry
         telemetry.addData("STATUS: ", "Initialized"); // the FTC equivalent to println()
         telemetry.addData("FTC Team #", "22531");
@@ -62,6 +67,7 @@ public abstract class SystemsManager extends OpMode {
         }
         claw.telemetry(telemetry);
     }
+
 
     protected void updateMotor(final int controllerNum) {
         double left, right, center;

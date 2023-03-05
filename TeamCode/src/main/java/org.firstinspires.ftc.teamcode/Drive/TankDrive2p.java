@@ -19,6 +19,9 @@ public class TankDrive2p extends SystemsManager {
         updateClaw(2);
         updateSlide(2);
 
+        cameraServo.resetCameraServo();
+        cameraServo.telemetry(telemetry);
+
         telemetry.update();
     }
 }

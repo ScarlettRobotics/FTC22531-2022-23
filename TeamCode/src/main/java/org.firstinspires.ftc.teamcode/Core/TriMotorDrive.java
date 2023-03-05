@@ -13,11 +13,13 @@ public class TriMotorDrive {
     private DcMotor rightMotor;
     private DcMotor centerMotor;
     //// CONSTANT VARIABLES
-    private final int ENCODER_VALUES_PER_ROTATION = 1400;
+    private final int ENCODER_VALUES_PER_ROTATION = 700;
     // TODO ADJUST VALUE
     private final double INCHES_PER_ROTATION = 12.36;
 
     /** Init */
+
+    //Initializes 3 DcMotor Objects for the 3 wheels and sets movement directions
     public TriMotorDrive (HardwareMap hardwareMap) {
         // Map DcMotor variables to hardwareMap
         leftMotor = hardwareMap.get(DcMotor.class, "left_motor");
@@ -25,8 +27,8 @@ public class TriMotorDrive {
         centerMotor = hardwareMap.get(DcMotor.class, "center_motor");
 
         // Set motor movement directions
-        leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         centerMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -84,6 +86,21 @@ public class TriMotorDrive {
         leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         centerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+    public int getLeftMotorTargetPosition() {
+       return  leftMotor.getTargetPosition();
+    }
+
+    public int getRightMotorTargetPosition() {
+        return  rightMotor.getTargetPosition();
+    }
+
+    public int getLeftMotorCurrentPosition() {
+        return  leftMotor.getTargetPosition();
+    }
+
+    public int getRightMotorCurrentPosition() {
+        return  rightMotor.getTargetPosition();
     }
 
     /** If the motors are in RUN_TO_POSITION, motors progress to their target position */

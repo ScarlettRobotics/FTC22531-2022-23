@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
+/** Detects the sleeve detected on the camera, then corrects itself to the right position.
+ * Once the robot has done this, it moves forward 2 squares to land in the parking spot. */
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -7,9 +10,9 @@ import org.firstinspires.ftc.teamcode.Core.*;
 import org.firstinspires.ftc.teamcode.Core.CV.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Right Auto", group="Auto")
+@Autonomous(name="Standard Auto", group="Auto")
 
-public class RightAuto extends LinearOpMode {
+public class StandardAuto extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
     protected TriMotorDrive drive;
@@ -34,67 +37,27 @@ public class RightAuto extends LinearOpMode {
 
         // run until the end of match (driver pressed STOP)
         while(opModeIsActive()) {
-            // Close claw
-            if (autoEventHandler.actionOccurred(0, runtime.time())) {
-                claw.close();
-            }
-            // Centre, and close claw
+            /*if (autoEventHandler.actionOccurred(0, runtime.time())) {
+                sleeveDetector.updateSleevePos(webcam.pipeline.getHsvFilterPink(),
+                        webcam.pipeline.getHsvFilterGreen(),
+                        webcam.pipeline.getHsvFilterOrange());
+            }*/
+
+            // Align with correct position
             if (autoEventHandler.actionOccurred(1, runtime.time())) {
-                drive.moveInches(0, 0, -9);
-            }
-
-            // Move forward 2 tiles, and move slide up
-            if (autoEventHandler.actionOccurred(2, runtime.time())) {
-                drive.moveInches(48, 48, 0);
-                //slide.slideManual(0.8);
-            }
-
-            // Centre with pole
-            if (autoEventHandler.actionOccurred(3, runtime.time())) {
-                drive.moveInches(0, 0, -11);
-            }
-
-            // Move slightly forward
-            if (autoEventHandler.actionOccurred(4, runtime.time())) {
-                drive.moveInches(7, 7, 0);
-            }
-
-            // Slightly move slide down
-            if (autoEventHandler.actionOccurred(5, runtime.time())) {
-                //slide.slideManual(-0.6);
-            }
-
-            // Drop cone on slide
-            if (autoEventHandler.actionOccurred(6, runtime.time())) {
-                //claw.open();
-                drive.moveInches(-7, -7, 0);
-            }
-
-            // Park to correct position
-            if (autoEventHandler.actionOccurred(7, runtime.time())) {
                 switch (webcam.pipeline.getSleevePos()) {
                     case 1:
-                        drive.moveInches(0, 0, 33);
+                        drive.moveInches(0, 0, -40);
                         break;
                     case 3:
-                        drive.moveInches(0, 0, -11);
+                        drive.moveInches(0, 0, 40);
                         break;
-                    default:
-                        drive.moveInches(0, 0, 11);
                 }
             }
 
-            if (autoEventHandler.actionOccurred(8, runtime.time())) {
-                //slide.slideManual(0);
-            }
-
-            // Clap while waiting
-            if (runtime.time() >= 13500) {
-                if ((int)(runtime.time() / 400) % 2 == 1) {
-                    //claw.open();
-                } else {
-                    //claw.close();
-                }
+            // Move forward 2 tiles
+            if (autoEventHandler.actionOccurred(2, runtime.time())) {
+                drive.moveInches(30, 30, 0);
             }
 
             drive.update();
@@ -118,15 +81,9 @@ public class RightAuto extends LinearOpMode {
         autoEventHandler = new AutoEventHandler();
 
         // Add times where the robot takes actions
-        autoEventHandler.addDetectionTime(0);
-        autoEventHandler.addDetectionTime(500);
-        autoEventHandler.addDetectionTime(1500);
-        autoEventHandler.addDetectionTime(5500);
-        autoEventHandler.addDetectionTime(8500);
-        autoEventHandler.addDetectionTime(9500);
-        autoEventHandler.addDetectionTime(9800);
-        autoEventHandler.addDetectionTime(11500);
-        autoEventHandler.addDetectionTime(13500);
+        autoEventHandler.addDetectionTime(2000);
+        autoEventHandler.addDetectionTime(3000);
+        autoEventHandler.addDetectionTime(4000);
     }
 
     private void addTelemetry(Telemetry telemetry) {

@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Core.*;
+import org.firstinspires.ftc.teamcode.Core.CV.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="Left Auto", group="Auto")
@@ -24,6 +25,8 @@ public class LeftAuto extends LinearOpMode {
     protected TriMotorDrive drive;
     protected ClawCore claw;
     protected SlideCore slide;
+    protected WebcamCore webcam;
+    protected CameraServoCore cameraServo;
 
     protected AutoEventHandler autoEventHandler;
 
@@ -34,10 +37,7 @@ public class LeftAuto extends LinearOpMode {
         waitForStart();
 
         runtime.reset();
-        // TODO cameraServo.resetCameraServo();
-
-        // TODO find a way to process frames
-        // TODO sleeveDetector.updateSleevePos(webcam.pipeline.getHsvFilterPink(), webcam.pipeline.getHsvFilterGreen(), webcam.pipeline.getHsvFilterOrange());
+        cameraServo.resetCameraServo();
 
         // TODO rightMotor moves before leftMotor; they should move at the same time
         // strafe right to center on tile
@@ -56,12 +56,12 @@ public class LeftAuto extends LinearOpMode {
             // Move forward 2 tiles, and move slide up
             if (autoEventHandler.actionOccurred(2, runtime.time())) {
                 drive.moveInches(48, 48, 0);
-                slide.slideManual(0.8);
+                //slide.slideManual(0.8);
             }
 
             // Centre with pole
             if (autoEventHandler.actionOccurred(3, runtime.time())) {
-                drive.moveInches(0, 0, 18);
+                drive.moveInches(0, 0, 11);
             }
 
             // Move slightly forward
@@ -71,36 +71,39 @@ public class LeftAuto extends LinearOpMode {
 
             // Slightly move slide down
             if (autoEventHandler.actionOccurred(5, runtime.time())) {
-                slide.slideManual(-0.6);
+                //slide.slideManual(-0.6);
             }
 
             // Drop cone on slide
             if (autoEventHandler.actionOccurred(6, runtime.time())) {
-                claw.open();
-                drive.moveInches(-7, -7, 0);
+                //claw.open();
+                //drive.moveInches(-7, -7, 0);
             }
 
             // Park to correct position
             if (autoEventHandler.actionOccurred(7, runtime.time())) {
-                /* TODO if (sleeveDetector.getSleevePos() == 1) {
-                    drive.moveInches(0, 0, -30);
-                } else if (sleeveDetector.getSleevePos() == 3) {
-                    drive.moveInches(0, 0, 10);
-                } else { */
-                    drive.moveInches(0, 0, -11);
-                // TODO}
+                switch (webcam.pipeline.getSleevePos()) {
+                    case 1:
+                        drive.moveInches(0, 0, -33);
+                        break;
+                    case 3:
+                        drive.moveInches(0, 0, 11);
+                        break;
+                    default:
+                        drive.moveInches(0, 0, -11);
+                }
             }
 
             if (autoEventHandler.actionOccurred(8, runtime.time())) {
-                slide.slideManual(0);
+                //slide.slideManual(0);
             }
 
             // Clap while waiting
             if (runtime.time() >= 13500) {
                 if ((int)(runtime.time() / 400) % 2 == 1) {
-                    claw.open();
+                    //claw.open();
                 } else {
-                    claw.close();
+                    //claw.close();
                 }
             }
 
@@ -119,11 +122,10 @@ public class LeftAuto extends LinearOpMode {
         claw = new ClawCore(hardwareMap);
         slide = new SlideCore(hardwareMap);
         //init webcam classes
-        // TODO webcam = new WebcamCore(hardwareMap);
-        // TODO cameraServo = new CameraServoCore(hardwareMap);
+        webcam = new WebcamCore(hardwareMap);
+        cameraServo = new CameraServoCore(hardwareMap);
         //init auto classes
         autoEventHandler = new AutoEventHandler();
-        // TODO sleeveDetector = new SleeveDetector();
 
         // Add times where the robot takes actions
         autoEventHandler.addDetectionTime(0);
@@ -141,7 +143,7 @@ public class LeftAuto extends LinearOpMode {
         telemetry.addData("FTC Team #", "22531");
         telemetry.addData("Elapsed time", "%4.2f", runtime.time());
         drive.telemetry(telemetry);
-        // TODO sleeveDetector.telemetry(telemetry);
+        webcam.pipeline.addTelemetry(telemetry);
         autoEventHandler.telemetry(telemetry);
         telemetry.update();
     }
