@@ -67,7 +67,7 @@ public class RightAuto extends LinearOpMode {
             // Drop cone on slide
             if (autoEventHandler.actionOccurred(6, runtime.time())) {
                 //claw.open();
-                drive.moveInches(-7, -7, 0);
+                //drive.moveInches(-7, -7, 0);
             }
 
             // Park to correct position
@@ -80,7 +80,7 @@ public class RightAuto extends LinearOpMode {
                         drive.moveInches(0, 0, -11);
                         break;
                     default:
-                        drive.moveInches(0, 0, 11);
+                        drive.moveInches(0, 0, 11); //Case 2
                 }
             }
 

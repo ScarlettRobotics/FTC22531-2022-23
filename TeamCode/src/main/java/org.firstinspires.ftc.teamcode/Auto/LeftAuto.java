@@ -90,7 +90,7 @@ public class LeftAuto extends LinearOpMode {
                         drive.moveInches(0, 0, 11);
                         break;
                     default:
-                        drive.moveInches(0, 0, -11);
+                        drive.moveInches(0, 0, -11); //Case 2
                 }
             }
 
