@@ -81,10 +81,35 @@ public abstract class SystemsManager extends OpMode {
                 center = gamepad1.right_trigger - gamepad1.left_trigger;
                 // Snap turn
                 if (!pLeftBumper && gamepad1.left_bumper) {
-                    drive.moveInches(-11, 11, 0);
+                    turnQueueLeft++;
+                    if (turnQueueLeft > 0) {
+                        if (drive.getLeftMotorTargetPosition() == drive.getLeftMotorCurrentPosition()) {
+                            turnQueueLeft--;
+                            drive.moveInches(-11, 11, 0);
+
+                        } else {
+                            return;
+                        }
+
+
+
+                    }
                 }
+
                 if (!pRightBumper && gamepad1.right_bumper) {
-                    drive.moveInches(11, -11, 0);
+                    turnQueueRight++;
+                    if (turnQueueRight > 0) {
+                        if (drive.getRightMotorTargetPosition() == drive.getRightMotorCurrentPosition()) {
+                            turnQueueRight--;
+                            drive.moveInches(11, -11, 0);
+                        } else {
+                            return;
+                        }
+
+
+
+                    }
+
                 }
                 pLeftBumper = gamepad1.left_bumper;
                 pRightBumper = gamepad1.right_bumper;

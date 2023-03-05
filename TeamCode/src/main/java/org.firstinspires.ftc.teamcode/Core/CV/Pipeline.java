@@ -142,7 +142,7 @@ public class Pipeline extends OpenCvPipeline {
         return sleevePos;
     }
 
-    public void addTelemetry(Telemetry telemetry) {
+    public void telemetry(Telemetry telemetry) {
         telemetry.addData("\nCurrent class", "Pipeline.java");
         telemetry.addData("sumPixelsPink", sumPixelsPink);
         telemetry.addData("sumPixelsGreen", sumPixelsGreen);

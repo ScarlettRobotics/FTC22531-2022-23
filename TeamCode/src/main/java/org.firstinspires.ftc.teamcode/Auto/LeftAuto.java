@@ -143,7 +143,7 @@ public class LeftAuto extends LinearOpMode {
         telemetry.addData("FTC Team #", "22531");
         telemetry.addData("Elapsed time", "%4.2f", runtime.time());
         drive.telemetry(telemetry);
-        webcam.pipeline.addTelemetry(telemetry);
+        webcam.pipeline.telemetry(telemetry);
         autoEventHandler.telemetry(telemetry);
         telemetry.update();
     }
