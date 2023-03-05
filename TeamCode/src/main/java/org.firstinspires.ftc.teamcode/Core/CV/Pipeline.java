@@ -60,15 +60,17 @@ public class Pipeline extends OpenCvPipeline {
         sumPixelsGreen = sumPixels(hsvFilterGreen);
         sumPixelsOrange = sumPixels(hsvFilterOrange);
 
-        if (sumPixelsPink > sumPixelsGreen &&
+        if (sumPixelsOrange > 10){
+            sleevePos = 3;
+        } else if (sumPixelsPink > sumPixelsGreen &&
                 sumPixelsPink > sumPixelsOrange) {
             sleevePos = 1;
         } else if (sumPixelsGreen > sumPixelsOrange &&
                 sumPixelsGreen > sumPixelsPink) {
             sleevePos = 2;
-        } else if (sumPixelsOrange > sumPixelsGreen &&
-                sumPixelsOrange > sumPixelsPink) {
-            sleevePos = 3;
+        } else if (sumPixelsGreen < 4000 &&
+                100 < sumPixelsPink) {
+            //sleevePos = 3;
         } else {
             // error
             sleevePos = 0;
