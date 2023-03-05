@@ -80,44 +80,37 @@ public abstract class SystemsManager extends OpMode {
                 right = gamepad1.right_stick_y;
                 center = gamepad1.right_trigger - gamepad1.left_trigger;
                 // Snap turn
+                if (!pLeftBumper && gamepad1.left_bumper) {
+                    turnQueueLeft++;
+                    if (turnQueueLeft > 0) {
+                        if (drive.getLeftMotorTargetPosition() == drive.getLeftMotorCurrentPosition()) {
+                            turnQueueLeft--;
+                            drive.moveInches(-11, 11, 0);
 
-
-
-
-                    if (!pLeftBumper && gamepad1.left_bumper) {
-                        turnQueueLeft++;
-                        if (turnQueueLeft > 0) {
-                            if (drive.getLeftMotorTargetPosition() == drive.getLeftMotorCurrentPosition()) {
-                                turnQueueLeft--;
-                                drive.moveInches(-11, 11, 0);
-
-                            } else {
-                                return;
-                            }
-
-
-
+                        } else {
+                            return;
                         }
+
+
+
                     }
+                }
 
-                    if (!pRightBumper && gamepad1.right_bumper) {
-                        turnQueueRight++;
-                        if (turnQueueRight > 0) {
-                            if (drive.getRightMotorTargetPosition() == drive.getRightMotorCurrentPosition()) {
-                                turnQueueRight--;
-                                drive.moveInches(11, -11, 0);
-                            } else {
-                                return;
-                            }
-
-
-
+                if (!pRightBumper && gamepad1.right_bumper) {
+                    turnQueueRight++;
+                    if (turnQueueRight > 0) {
+                        if (drive.getRightMotorTargetPosition() == drive.getRightMotorCurrentPosition()) {
+                            turnQueueRight--;
+                            drive.moveInches(11, -11, 0);
+                        } else {
+                            return;
                         }
+
+
 
                     }
 
-
-
+                }
                 pLeftBumper = gamepad1.left_bumper;
                 pRightBumper = gamepad1.right_bumper;
                 break;
