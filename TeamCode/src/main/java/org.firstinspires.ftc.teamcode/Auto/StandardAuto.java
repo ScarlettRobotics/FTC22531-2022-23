@@ -41,6 +41,7 @@ public class StandardAuto extends LinearOpMode {
                 claw.close();
             }
 
+
             // Align with correct position
             if (autoEventHandler.actionOccurred(1, runtime.time())) {
                 switch (webcam.pipeline.getSleevePos()) {
