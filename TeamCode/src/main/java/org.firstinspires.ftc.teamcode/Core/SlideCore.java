@@ -22,11 +22,11 @@ public class SlideCore {
     }
 
     public void slideUp(){
-        slideMotor.setPower(1);
+        slideMotor.setPower(0.9);
     }
 
     public void slideDown(){
-        slideMotor.setPower(-1);
+        slideMotor.setPower(-0.9);
     }
 
     public void slideStop(){
