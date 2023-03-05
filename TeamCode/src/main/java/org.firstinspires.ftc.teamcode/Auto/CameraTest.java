@@ -38,7 +38,7 @@ public class CameraTest extends LinearOpMode {
     private void addTelemetry(Telemetry telemetry) {
         telemetry.addData("FTC Team #", "22531");
         telemetry.addData("Elapsed time", "%4.2f", runtime.time());
-        webcam.pipeline.addTelemetry(telemetry);
+        webcam.pipeline.telemetry(telemetry);
         telemetry.update();
     }
 }
