@@ -23,11 +23,10 @@ public class CameraBench extends LinearOpMode {
     public void runOpMode() {
         initialize();
 
-        while(true){
+        waitForStart();
+        runtime.reset();
 
-            waitForStart();
-
-            runtime.reset();
+        while(opModeIsActive()){
             addTelemetry(telemetry);
         }
 
