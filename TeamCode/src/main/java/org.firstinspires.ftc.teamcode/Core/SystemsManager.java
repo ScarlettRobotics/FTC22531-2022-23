@@ -131,5 +131,34 @@ public abstract class SystemsManager extends OpMode {
         drive.update();
         drive.telemetry(telemetry);
     }
+
+    /* Garbage quick fix code that adds arcade drive to the drivetrain */
+    protected void updateMotorArcade(final int controllerNum) {
+        // turn is positive if intention is to turn right
+        double forward, turn, center;
+
+        // controllerNum determines the gamepad that controls the robot
+        switch(controllerNum) {
+            case 1:
+                // Move left/right wheels based on left/right stick movement
+                forward = gamepad1.right_stick_y;
+                turn = gamepad1.left_stick_x;
+                center = gamepad1.right_trigger - gamepad1.left_trigger;
+                break;
+            case 2:
+                // Move left/right wheels based on left/right stick movement
+                forward = gamepad2.right_stick_y;
+                turn = gamepad2.left_stick_x;
+                center = gamepad2.right_trigger - gamepad2.left_trigger;
+                break;
+            default:
+                forward = 0;
+                turn = 0;
+                center = 0;
+        }
+        drive.setMoveVelocity(forward - turn, forward + turn, center);
+        drive.update();
+        drive.telemetry(telemetry);
+    }
 }
 
